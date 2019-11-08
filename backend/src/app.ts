@@ -15,6 +15,7 @@ const app: express.Application = express();
 app.set("port", port);
 app.use(helmet());
 app.use(cors());
+app.disable("etag").disable("x-powered-by");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -30,6 +31,8 @@ if (process.env.NODE_ENV != "development ") {
     res.sendFile(path.join(__dirname, "../../", "client/build/index.html"));
   });
 }
+
+app.use("/api", Router);
 // ============LOGGING============
 const morganFormat = process.env.NODE_ENV !== "production" ? "dev" : "combined";
 
@@ -83,7 +86,6 @@ app.listen(port, function() {
 // ============LOGGING============
 
 // append /api for our http requests
-app.use("/api", Router);
 
 // const server = app.listen(app.get("port"), () => {
 //   console.log(
