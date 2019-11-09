@@ -6,8 +6,6 @@ import path from "path";
 import mongoose from "mongoose";
 
 import Router from "./routes/route";
-import * as config from "../config";
-
 import morgan from "morgan";
 import { logger } from "./util/logger";
 
@@ -36,12 +34,12 @@ if (process.env.NODE_ENV != "development ") {
 
 app.use("/api", Router);
 
-const pass = config.pass;
-const user = config.user;
-const dbRoute = `mongodb+srv://${user}:${pass}@cluster0-hoja9.mongodb.net/test?retryWrites=true&w=majority`;
+// const pass = config.pass;
+// const user = config.user;
+// const dbRoute = `mongodb+srv://${user}:${pass}@cluster0-hoja9.mongodb.net/test?retryWrites=true&w=majority`;
 
 // connects our back end code with the database
-mongoose.connect(dbRoute, {
+mongoose.connect("mongodb://localhost:27017/mydatabase", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
