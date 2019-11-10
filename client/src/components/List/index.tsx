@@ -31,8 +31,8 @@ class List extends React.Component<Props, State> {
   }
 
   static getDerivedStateFromProps(nextProps: any, prevState: any) {
-    console.log("DERIVED", nextProps.items != prevState.items);
-    if (nextProps.items != prevState.items) {
+    console.log("DERIVED", nextProps.items !== prevState.items);
+    if (nextProps.items !== prevState.items) {
       return { items: nextProps.items };
     } else return null;
   }
@@ -48,14 +48,6 @@ class List extends React.Component<Props, State> {
   //     this.setState({ items: someValue });
   //     this.classMethod();
   //   }
-  // }
-
-  // componentWillReceiveProps(nextProps: any) {
-  //   console.log("props receive");
-  //   if(nextProps.list !== this.state.)
-  //   this.setState({
-  //     filtered: nextProps.items
-  //   });
   // }
 
   [handleChange] = (e: any) => {

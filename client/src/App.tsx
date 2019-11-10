@@ -1,8 +1,10 @@
 // /client/App.js
 import React from "react";
-import axios from "axios";
 
-import { List } from "./components";
+import { connect } from "react-redux";
+import { fetchData, addData } from "./redux/actions/databaseActions";
+
+import { List, SpinnerComponent } from "./components";
 
 const initialState = Object.freeze({
   data: [],
@@ -27,13 +29,13 @@ class App extends React.Component<any, any> {
   // then we incorporate a polling logic so that we can easily see if our db has
   // changed and implement those changes into our UI
   componentDidMount() {
-    console.log("mount");
-    this.getDataFromDb();
-    if (!this.state.intervalIsSet) {
-      let interval = setInterval(this.getDataFromDb, 5000);
-      this.setState({ intervalIsSet: interval });
-      console.log("mount did interval");
-    }
+    this.props.fetchData();
+
+    // if (!this.state.intervalIsSet) {
+    //   let interval = setInterval(this.getDataFromDb, 5000);
+    //   this.setState({ intervalIsSet: interval });
+    //   console.log("mount did interval");
+    // }
   }
 
   // // never let a process live forever
@@ -44,10 +46,10 @@ class App extends React.Component<any, any> {
       this.setState({ intervalIsSet: null });
     }
   }
-  componentWillReceiveProps(nextProps: any, prevProps: any) {
-    console.log(nextProps, "NEXT PROPS");
-    console.log(prevProps, "PREV PROPS");
-  }
+  // componentWillReceiveProps(nextProps: any, prevProps: any) {
+  //   console.log(nextProps, "NEXT PROPS");
+  //   console.log(prevProps, "PREV PROPS");
+  // }
 
   // [handleChange] = (e: any) => {
   //   const { value, id } = e.target;
@@ -61,29 +63,23 @@ class App extends React.Component<any, any> {
 
   // // our first get method that uses our backend api to
   // // fetch data from our data base
-  getDataFromDb = async () => {
-    const response = await fetch("http://localhost:3001/api/getData");
-    const { data } = await response.json();
-    if (JSON.stringify(data) != JSON.stringify(this.state.data))
-      this.setState({ data });
-  };
 
   // // our put method that uses our backend api
   // // to create new query into our data base
-  putDataToDB = (message: any) => {
-    let currentIds = this.state.data.map((data: any) => data.id);
-    let idToBeAdded = 0;
-    while (currentIds.includes(idToBeAdded)) {
-      ++idToBeAdded;
-    }
-    const { name, login, password } = this.state;
-    axios.post("http://localhost:3001/api/putData", {
-      id: idToBeAdded,
-      name: "hello",
-      login: "heloo",
-      password: "need"
-    });
-  };
+  // putDataToDB = (message: any) => {
+  //   let currentIds = this.state.data.map((data: any) => data.id);
+  //   let idToBeAdded = 0;
+  //   while (currentIds.includes(idToBeAdded)) {
+  //     ++idToBeAdded;
+  //   }
+  //   const { name, login, password } = this.state;
+  //   axios.post("http://localhost:3001/api/putData", {
+  //     id: idToBeAdded,
+  //     name: "hello",
+  //     login: "heloo",
+  //     password: "need"
+  //   });
+  // };
 
   // // our delete method that uses our backend api
   // // to remove existing database information
@@ -121,10 +117,13 @@ class App extends React.Component<any, any> {
   // };
 
   render() {
-    const { list, data } = this.state;
+    // const { list, data } = this.state;
+    const { data, loading, error } = this.props;
     return (
       <>
-        <List items={data} onClick={this.putDataToDB} />
+        {(loading && <SpinnerComponent />) || (
+          <List items={data} onClick={this.props.addData} />
+        )}
       </>
 
       // <div>
@@ -202,4 +201,17 @@ class App extends React.Component<any, any> {
   }
 }
 
-export default App;
+const mapStateToProps = (state: any) => ({
+  data: state.database.data,
+  loading: state.database.loading,
+  error: state.database.error
+  // preview: state.preview
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    fetchData,
+    addData
+  }
+)(App);
