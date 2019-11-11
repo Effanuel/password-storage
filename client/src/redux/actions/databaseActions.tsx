@@ -3,7 +3,31 @@ import axios from "axios";
 
 import { Thunk } from "../models/state";
 
-export const fetchData = (payload: any): Thunk => async dispatch => {
+interface DataLoading {
+  type: constants.DATA_LOADING;
+}
+interface FetchDataSuccess {
+  type: constants.FETCH_DATA_SUCCESS;
+  payload: any;
+}
+
+interface FetchDataError {
+  type: constants.FETCH_DATA_ERROR;
+  payload: any;
+}
+
+interface AddDataSuccess {
+  type: constants.ADD_DATA_SUCCESS;
+  payload: any;
+}
+
+export type Actions =
+  | DataLoading
+  | FetchDataSuccess
+  | FetchDataError
+  | AddDataSuccess;
+
+export const fetchData = (payload?: any): Thunk => async dispatch => {
   try {
     dispatch(dataLoading());
     const response = await axios.get("/api/getData");
@@ -25,7 +49,6 @@ export const addData = (payload: any): Thunk => async dispatch => {
     // }
     // const { name, login, password } = payload;
     const response = await axios.post("/api/putData", {
-      id: 13,
       name: "NEWDATA",
       login: "GMAIL",
       password: "123ASD"
@@ -33,6 +56,7 @@ export const addData = (payload: any): Thunk => async dispatch => {
     const { data } = response;
     console.log("ADDDATARESPONSE", response);
     dispatch(addDataSuccess(data));
+    dispatch(fetchData());
   } catch (err) {
     console.log("FETCHDATAERROR", err);
     dispatch(fetchDataError(err));

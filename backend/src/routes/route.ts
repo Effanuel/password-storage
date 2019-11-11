@@ -36,9 +36,9 @@ Router.delete("/deleteData", (req, res) => {
 Router.post("/putData", (req, res) => {
   let data: any = new Data();
 
-  const { id, name, login, password } = req.body;
+  const { name, login, password } = req.body;
 
-  if ((!id && id !== 0) || !name || !login || !password) {
+  if (!name || !login || !password) {
     return res.json({
       success: false,
       error: "INVALID INPUTS"

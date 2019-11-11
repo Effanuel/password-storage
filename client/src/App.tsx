@@ -1,51 +1,46 @@
 // /client/App.js
 import React from "react";
 
-import { connect } from "react-redux";
-import { fetchData, addData } from "./redux/actions/databaseActions";
+// import { SpinnerComponent } from "./components";
+import { SearchContainer } from "./containers";
 
-import { List, SpinnerComponent } from "./components";
+// const initialState = Object.freeze({
+//   data: [],
+//   id: 0,
+//   name: null,
+//   login: null,
+//   password: null,
+//   intervalIsSet: false,
+//   idToDelete: null,
+//   idToUpdate: null,
+//   objectToUpdate: null,
+//   searchTerm: ""
+//   // list: ["Go to the store", "Wash the dishes", "Learn some code"]
+// });
 
-const initialState = Object.freeze({
-  data: [],
-  id: 0,
-  name: null,
-  login: null,
-  password: null,
-  intervalIsSet: false,
-  idToDelete: null,
-  idToUpdate: null,
-  objectToUpdate: null,
-  searchTerm: ""
-  // list: ["Go to the store", "Wash the dishes", "Learn some code"]
-});
-
-const handleChange = Symbol();
+// const handleChange = Symbol();
 
 class App extends React.Component<any, any> {
-  // initialize our state
-  readonly state: any = initialState;
-  // when component mounts, first thing it does is fetch all existing data in our db
-  // then we incorporate a polling logic so that we can easily see if our db has
-  // changed and implement those changes into our UI
-  componentDidMount() {
-    this.props.fetchData();
+  // readonly state: any = initialState;
 
-    // if (!this.state.intervalIsSet) {
-    //   let interval = setInterval(this.getDataFromDb, 5000);
-    //   this.setState({ intervalIsSet: interval });
-    //   console.log("mount did interval");
-    // }
-  }
+  // componentDidMount() {
+  //   this.props.fetchData();
 
-  // // never let a process live forever
-  // // always kill a process everytime we are done using it
-  componentWillUnmount() {
-    if (this.state.intervalIsSet) {
-      clearInterval(this.state.intervalIsSet);
-      this.setState({ intervalIsSet: null });
-    }
-  }
+  //   // if (!this.state.intervalIsSet) {
+  //   //   let interval = setInterval(this.getDataFromDb, 5000);
+  //   //   this.setState({ intervalIsSet: interval });
+  //   //   console.log("mount did interval");
+  //   // }
+  // }
+
+  // // // never let a process live forever
+  // // // always kill a process everytime we are done using it
+  // componentWillUnmount() {
+  //   if (this.state.intervalIsSet) {
+  //     clearInterval(this.state.intervalIsSet);
+  //     this.setState({ intervalIsSet: null });
+  //   }
+  // }
   // componentWillReceiveProps(nextProps: any, prevProps: any) {
   //   console.log(nextProps, "NEXT PROPS");
   //   console.log(prevProps, "PREV PROPS");
@@ -118,12 +113,13 @@ class App extends React.Component<any, any> {
 
   render() {
     // const { list, data } = this.state;
-    const { data, loading, error } = this.props;
+    // const { data, loading, error } = this.props;
     return (
       <>
-        {(loading && <SpinnerComponent />) || (
-          <List items={data} onClick={this.props.addData} />
-        )}
+        <SearchContainer />
+        {/* {(loading && <SpinnerComponent />) || (
+          <SearchContainer items={data} onClick={this.props.addData} />
+        )} */}
       </>
 
       // <div>
@@ -201,17 +197,18 @@ class App extends React.Component<any, any> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  data: state.database.data,
-  loading: state.database.loading,
-  error: state.database.error
-  // preview: state.preview
-});
+// const mapStateToProps = (state: any) => ({
+//   data: state.database.data,
+//   loading: state.database.loading,
+//   error: state.database.error
+//   // preview: state.preview
+// });
 
-export default connect(
-  mapStateToProps,
-  {
-    fetchData,
-    addData
-  }
-)(App);
+// export default connect(
+//   mapStateToProps,
+//   {
+//     fetchData,
+//     addData
+//   }
+// )(App);
+export default App;

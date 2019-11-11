@@ -39,11 +39,17 @@ app.use("/api", Router);
 // const dbRoute = `mongodb+srv://${user}:${pass}@cluster0-hoja9.mongodb.net/test?retryWrites=true&w=majority`;
 
 // connects our back end code with the database
-mongoose.connect("mongodb://localhost:27017/mydatabase", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false
-});
+mongoose.connect(
+  "mongodb://localhost:27017/mydatabase",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+  }
+  // () => {
+  //   mongoose.connection.db.dropDatabase();
+  // }
+);
 
 let db = mongoose.connection;
 db.once("open", () => console.log("connected to the database"));
