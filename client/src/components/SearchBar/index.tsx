@@ -14,7 +14,7 @@ const SearchBar = (props: Props) => {
 
   return (
     <>
-      <InputGroup>
+      <InputGroup style={{ paddingBottom: "5px" }}>
         <Form.Control
           type="text"
           placeholder={placeholder}

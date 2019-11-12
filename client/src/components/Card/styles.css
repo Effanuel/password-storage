@@ -1,0 +1,46 @@
+.container {
+  margin: 0px;
+  margin-bottom: 5px;
+  height: 50px;
+
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  background-color: lightgreen;
+}
+
+.container:hover {
+  background-color: green;
+  transition: 0.1s;
+}
+
+.Button {
+  border-radius: 0px;
+  padding: 0px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  /* width: 80%; */
+  flex: 1;
+  /* background-color: red; */
+}
+
+.name-login-container {
+  display: inline-block;
+  vertical-align: middle;
+  flex: 3;
+  /* background-color: green; */
+}
+
+.name-style {
+  font-weight: bold;
+  color: blue;
+}
+/* .login-style {
+} */

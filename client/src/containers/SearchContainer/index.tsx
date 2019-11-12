@@ -5,7 +5,9 @@ import { fetchData, addData } from "../../redux/actions/databaseActions";
 
 // import { filteredDataSelector } from "../../redux/selectors";
 
-import { SearchBar, SpinnerComponent } from "../../components";
+import { SearchBar, SpinnerComponent, Card } from "../../components";
+
+import "./styles.css";
 
 interface Props {
   items: any;
@@ -95,29 +97,29 @@ class SearchContainer extends React.Component<any, any> {
   render() {
     const { data, loading } = this.props;
     return (
-      <div>
+      <div className="search-container">
         <SearchBar
           onChange={this[handleChange]}
           onClick={this[handleAddData]}
           placeholder="Search..."
         />
-        <ul>
-          {loading ? (
-            <SpinnerComponent />
-          ) : (
-            this.state.filtered.map((item: any, i: any) => (
-              <li key={i}>
-                {item.name} &nbsp;
-                {item.login} &nbsp;
-                {item.password} &nbsp;
-                <span
-                  className="delete"
-                  onClick={() => this.props.delete(item)}
-                />
-              </li>
-            ))
-          )}
-        </ul>
+
+        {loading ? (
+          <SpinnerComponent />
+        ) : (
+          this.state.filtered.map((item: any, i: any) => (
+            <Card key={i} name={item.name} login={item.login} />
+            // <li key={i}>
+            //   {item.name} &nbsp;
+            //   {item.login} &nbsp;
+            //   {item.password} &nbsp;
+            //   <span
+            //     className="delete"
+            //     onClick={() => this.props.delete(item)}
+            //   />
+            // </li>
+          ))
+        )}
       </div>
     );
   }
@@ -130,10 +132,7 @@ const mapStateToProps = (state: any) => ({
   error: state.database.error
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    fetchData,
-    addData
-  }
-)(SearchContainer);
+export default connect(mapStateToProps, {
+  fetchData,
+  addData
+})(SearchContainer);
