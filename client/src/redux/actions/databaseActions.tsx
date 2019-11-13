@@ -63,6 +63,23 @@ export const addData = (payload: any): Thunk => async dispatch => {
   }
 };
 
+export const removeData = (payload: any): Thunk => async dispatch => {
+  try {
+    dispatch(dataLoading());
+    const response = await axios.delete("/api/deleteData", {
+      data: {
+        name: payload
+      }
+    });
+    const { data } = response;
+    console.log(response);
+    dispatch(removeDataSuccess());
+    dispatch(fetchData());
+  } catch (err) {
+    dispatch(fetchDataError(err));
+  }
+};
+
 function dataLoading(payload?: any): any {
   return {
     type: constants.DATA_LOADING
@@ -81,6 +98,13 @@ function addDataSuccess(payload: any): any {
   return {
     type: constants.ADD_DATA_SUCCESS,
     payload: payload.success
+  };
+}
+
+function removeDataSuccess(payload?: any): any {
+  return {
+    type: constants.ADD_DATA_SUCCESS,
+    payload: payload
   };
 }
 

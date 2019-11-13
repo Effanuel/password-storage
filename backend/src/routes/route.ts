@@ -24,8 +24,9 @@ Router.post("/updateData", (req, res) => {
 // this is our delete method
 // this method removes existing data in our database
 Router.delete("/deleteData", (req, res) => {
-  const { id } = req.body;
-  Data.findByIdAndRemove(id, err => {
+  console.log(req.body);
+  const { name } = req.body;
+  Data.findOneAndRemove({ name: name }, err => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });

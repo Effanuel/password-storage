@@ -9,9 +9,7 @@ interface Props {
   value?: any;
 }
 
-const SearchBar = (props: Props) => {
-  const { onClick, onChange, placeholder, value } = props;
-
+const SearchBar = ({ onClick, onChange, placeholder, value }: Props) => {
   return (
     <>
       <InputGroup style={{ paddingBottom: "5px" }}>

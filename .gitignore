@@ -64,3 +64,10 @@ typings/
 
 # mongo user/password
 config.ts
+
+
+
+
+# BUILD FILES
+build/
+dist/

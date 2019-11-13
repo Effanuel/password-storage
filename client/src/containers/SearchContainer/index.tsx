@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { fetchData, addData } from "../../redux/actions/databaseActions";
+import {
+  fetchData,
+  addData,
+  removeData
+} from "../../redux/actions/databaseActions";
 
 // import { filteredDataSelector } from "../../redux/selectors";
 
@@ -31,6 +35,7 @@ const handleUpdateData = Symbol();
 
 class SearchContainer extends React.Component<any, any> {
   readonly state: any = initialState;
+  myRef = React.createRef();
 
   componentDidMount() {
     this.props.fetchData();
@@ -58,6 +63,13 @@ class SearchContainer extends React.Component<any, any> {
 
   [handleAddData] = (): void => {
     this.props.addData();
+  };
+  [handleRemoveData] = (e: any, value: any): void => {
+    console.log(value);
+    this.props.removeData(value);
+  };
+  [handleUpdateData] = (e: any, { name }: any): void => {
+    console.log("update");
   };
 
   [handleChange] = (e: any) => {
@@ -96,6 +108,7 @@ class SearchContainer extends React.Component<any, any> {
 
   render() {
     const { data, loading } = this.props;
+    const { filtered } = this.state;
     return (
       <div className="search-container">
         <SearchBar
@@ -104,11 +117,23 @@ class SearchContainer extends React.Component<any, any> {
           placeholder="Search..."
         />
 
-        {loading ? (
+        {// loading ? (sp) : (length == 0 ? "gogo" : )
+
+        loading ? (
           <SpinnerComponent />
+        ) : filtered &&
+          filtered.constructor === Array &&
+          filtered.length === 0 ? (
+          "No entries found."
         ) : (
-          this.state.filtered.map((item: any, i: any) => (
-            <Card key={i} name={item.name} login={item.login} />
+          filtered.map((item: any, i: any) => (
+            <Card
+              key={i}
+              name={item.name}
+              login={item.login}
+              onClickRemove={this[handleRemoveData]}
+              onClickUpdate={this[handleUpdateData]}
+            />
             // <li key={i}>
             //   {item.name} &nbsp;
             //   {item.login} &nbsp;
@@ -134,5 +159,6 @@ const mapStateToProps = (state: any) => ({
 
 export default connect(mapStateToProps, {
   fetchData,
-  addData
+  addData,
+  removeData
 })(SearchContainer);
