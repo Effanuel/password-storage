@@ -12,4 +12,5 @@ export interface DatabaseState {
   loading: boolean;
   error: string;
   showModal: boolean;
+  selectedName: any
 }

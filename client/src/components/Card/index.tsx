@@ -6,8 +6,13 @@ import "./styles.css";
 interface Props {
   name: string;
   login: string;
-  password?: string;
-  onClickUpdate: (e: any, name: string) => void;
+  password: string;
+  onClickUpdate: (
+    e: any,
+    name: string,
+    login: string,
+    password: string
+  ) => void;
   onClickRemove: (e: any, name: string) => void;
 }
 
@@ -26,7 +31,10 @@ const Card = ({
         <span className="login-style">{login}</span>
       </span>
       <div className="button-container">
-        <Button variant="info" onClick={(e: any) => onClickUpdate(e, name)}>
+        <Button
+          variant="info"
+          onClick={(e: any) => onClickUpdate(e, name, login, password)}
+        >
           /
         </Button>
         <Button variant="danger" onClick={(e: any) => onClickRemove(e, name)}>

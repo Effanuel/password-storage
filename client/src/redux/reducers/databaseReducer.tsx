@@ -12,7 +12,12 @@ const initialState = {
   data: [],
   loading: false,
   error: "",
-  showModal: false
+  showModal: false,
+  selectedName: {
+    name: "",
+    login: "",
+    password: ""
+  }
 };
 
 export default (state: DatabaseState = initialState, action: Actions): any => {

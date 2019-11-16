@@ -68,8 +68,10 @@ class SearchContainer extends React.Component<any, any> {
     console.log(value);
     this.props.removeData(value);
   };
-  [handleUpdateData] = (e: any, { name }: any): void => {
+  [handleUpdateData] = (e: any, { name, login, password }: any): void => {
     console.log("update");
+    // SET REDUX STATE NAME LGONI PASSWORD
+    // SHOW MODAL
   };
 
   [handleChange] = (e: any) => {
@@ -131,6 +133,7 @@ class SearchContainer extends React.Component<any, any> {
               key={i}
               name={item.name}
               login={item.login}
+              password={item.password}
               onClickRemove={this[handleRemoveData]}
               onClickUpdate={this[handleUpdateData]}
             />

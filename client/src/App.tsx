@@ -2,7 +2,7 @@
 import React from "react";
 
 // import { SpinnerComponent } from "./components";
-import { SearchContainer } from "./containers";
+import { SearchContainer, ModalContainer } from "./containers";
 
 // const initialState = Object.freeze({
 //   data: [],
@@ -69,6 +69,7 @@ class App extends React.Component<any, any> {
     return (
       <>
         <SearchContainer />
+        <ModalContainer />
         {/* {(loading && <SpinnerComponent />) || (
           <SearchContainer items={data} onClick={this.props.addData} />
         )} */}
