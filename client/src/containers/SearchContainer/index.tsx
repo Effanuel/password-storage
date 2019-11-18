@@ -6,10 +6,12 @@ import {
   addData,
   removeData
 } from "../../redux/actions/databaseActions";
+import { modalOpen } from "../../redux/actions/modalActions";
 
 // import { filteredDataSelector } from "../../redux/selectors";
 
-import { SearchBar, SpinnerComponent, Card } from "../../components";
+import { SpinnerComponent, Card } from "../../components";
+import { SearchBarContainer } from "../";
 
 import "./styles.css";
 
@@ -35,9 +37,9 @@ const handleUpdateData = Symbol();
 
 class SearchContainer extends React.Component<any, any> {
   readonly state: any = initialState;
-  myRef = React.createRef();
 
   componentDidMount() {
+    console.log("MOUN TED");
     this.props.fetchData();
   }
 
@@ -45,6 +47,7 @@ class SearchContainer extends React.Component<any, any> {
     // console.log(nextProps, "NEXTPROPS");
     // console.log(prevState, "PREVSTATE");
     // console.log("DERIVED", nextProps.items !== prevState.filtered);
+    console.log(nextProps.error, nextProps.loading);
     if (nextProps.data !== prevState.data) {
       console.log("CALL GET DERIVED SETSTATE");
       return { filtered: nextProps.data, data: nextProps.data };
@@ -62,46 +65,34 @@ class SearchContainer extends React.Component<any, any> {
   // }
 
   [handleAddData] = (): void => {
-    this.props.addData();
+    this.props.modalOpen("addModal");
   };
   [handleRemoveData] = (e: any, value: any): void => {
     console.log(value);
     this.props.removeData(value);
   };
-  [handleUpdateData] = (e: any, { name, login, password }: any): void => {
-    console.log("update");
+  [handleUpdateData] = (e: any, name: any, login: any, password: any): void => {
+    console.log(name, login, password);
+    this.props.modalOpen("updateModal");
     // SET REDUX STATE NAME LGONI PASSWORD
     // SHOW MODAL
   };
 
   [handleChange] = (e: any) => {
-    // Variable to hold the original version of the list
     let currentList = [];
-    // Variable to hold the filtered list before putting into state
     let newList = [];
 
-    // If the search bar isn't empty
     if (e.target.value !== "") {
-      // Assign the original list to currentList
       currentList = this.state.data;
 
-      // Use .filter() to determine which data should be displayed
-      // based on the search terms
       newList = currentList.filter((item: any) => {
-        // change current item to lowercase
         const lc = JSON.stringify(item.name).toLowerCase();
-        // change search term to lowercase
         const filter = e.target.value.toLowerCase();
-        // check to see if the current list item includes the search term
-        // If it does, it will be added to newList. Using lowercase eliminates
-        // issues with capitalization in search terms and search content
         return lc.includes(filter);
       });
     } else {
-      // If the search bar is empty, set newList to original task list
       newList = this.state.data;
     }
-    // Set the filtered state based on what our rules added to newList
     console.log("NEWSTATE", newList);
     this.setState({
       filtered: newList
@@ -109,19 +100,16 @@ class SearchContainer extends React.Component<any, any> {
   };
 
   render() {
-    const { data, loading } = this.props;
+    const { data, loading, error } = this.props;
     const { filtered } = this.state;
     return (
       <div className="search-container">
-        <SearchBar
+        <SearchBarContainer
           onChange={this[handleChange]}
           onClick={this[handleAddData]}
           placeholder="Search..."
         />
-
-        {// loading ? (sp) : (length == 0 ? "gogo" : )
-
-        loading ? (
+        {loading ? (
           <SpinnerComponent />
         ) : filtered &&
           filtered.constructor === Array &&
@@ -137,15 +125,6 @@ class SearchContainer extends React.Component<any, any> {
               onClickRemove={this[handleRemoveData]}
               onClickUpdate={this[handleUpdateData]}
             />
-            // <li key={i}>
-            //   {item.name} &nbsp;
-            //   {item.login} &nbsp;
-            //   {item.password} &nbsp;
-            //   <span
-            //     className="delete"
-            //     onClick={() => this.props.delete(item)}
-            //   />
-            // </li>
           ))
         )}
       </div>
@@ -163,5 +142,6 @@ const mapStateToProps = (state: any) => ({
 export default connect(mapStateToProps, {
   fetchData,
   addData,
-  removeData
+  removeData,
+  modalOpen
 })(SearchContainer);

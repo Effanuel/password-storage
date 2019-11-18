@@ -1,3 +1,4 @@
+//database
 export const DATA_LOADING = "DATA_LOADING";
 export type DATA_LOADING = "DATA_LOADING";
 
@@ -9,3 +10,10 @@ export type FETCH_DATA_ERROR = "FETCH_DATA_ERROR";
 
 export const ADD_DATA_SUCCESS = "ADD_DATA_SUCCESS";
 export type ADD_DATA_SUCCESS = "ADD_DATA_SUCCESS";
+
+//modal
+export const MODAL_OPEN = "MODAL_OPEN";
+export type MODAL_OPEN = "MODAL_OPEN";
+
+export const MODAL_CLOSE = "MODAL_CLOSE";
+export type MODAL_CLOSE = "MODAL_CLOSE";

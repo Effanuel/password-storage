@@ -12,7 +12,6 @@ const initialState = {
   data: [],
   loading: false,
   error: "",
-  showModal: false,
   selectedName: {
     name: "",
     login: "",
@@ -35,7 +34,7 @@ export default (state: DatabaseState = initialState, action: Actions): any => {
     case FETCH_DATA_ERROR:
       return { ...state, loading: false, error: action.payload };
     case ADD_DATA_SUCCESS:
-      return { ...state, loading: false };
+      return { ...state, loading: false, error: "" };
 
     // case ADD_DATA_ERROR:
     //   return { ...state, loading: false, error: action.payload };

@@ -1,5 +1,6 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import databaseReducer from "../reducers/databaseReducer";
+import modalReducer from "../reducers/modalReducer";
 // import websocketReducer from "../reducers/websocketReducer";
 
 import thunk from "redux-thunk";
@@ -10,9 +11,8 @@ const initialState = {};
 const middleware = [thunk];
 
 const rootReducer = combineReducers<any>({
-  database: databaseReducer
-  //   preview: previewReducer,
-  //   websocket: websocketReducer
+  database: databaseReducer,
+  modal: modalReducer
 });
 
 const store = createStore(

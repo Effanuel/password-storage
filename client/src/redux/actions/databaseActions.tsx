@@ -2,6 +2,7 @@ import * as constants from "./actionTypes";
 import axios from "axios";
 
 import { Thunk } from "../models/state";
+import { modalClose } from "./modalActions";
 
 interface DataLoading {
   type: constants.DATA_LOADING;
@@ -47,15 +48,15 @@ export const addData = (payload: any): Thunk => async dispatch => {
     // while (currentIds.includes(idToBeAdded)) {
     //   ++idToBeAdded;
     // }
-    // const { name, login, password } = payload;
+    const { name, login, password } = payload;
     const response = await axios.post("/api/putData", {
-      name: "NEWDATA",
-      login: "GMAIL",
-      password: "123ASD"
+      name: name,
+      login: login,
+      password: password
     });
-    const { data } = response;
     console.log("ADDDATARESPONSE", response);
-    dispatch(addDataSuccess(data));
+    // dispatch(addDataSuccess(data));
+    dispatch(modalClose());
     dispatch(fetchData());
   } catch (err) {
     console.log("FETCHDATAERROR", err);
@@ -71,7 +72,27 @@ export const removeData = (payload: any): Thunk => async dispatch => {
         name: payload
       }
     });
-    const { data } = response;
+    console.log(response);
+    dispatch(removeDataSuccess());
+    dispatch(fetchData());
+  } catch (err) {
+    dispatch(fetchDataError(err));
+  }
+};
+
+export const updateData = ({
+  name,
+  login,
+  password
+}: any): Thunk => async dispatch => {
+  try {
+    dispatch(dataLoading());
+    const response = await axios.delete("/api/updateData", {
+      data: {
+        filter: name,
+        update: { login: login, password: password }
+      }
+    });
     console.log(response);
     dispatch(removeDataSuccess());
     dispatch(fetchData());

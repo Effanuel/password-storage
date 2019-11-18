@@ -1,5 +1,8 @@
 import React from "react";
 
+import { connect } from "react-redux";
+import { addData } from "../../redux/actions/databaseActions";
+
 import { Form, InputGroup } from "react-bootstrap";
 
 interface Props {
@@ -9,7 +12,12 @@ interface Props {
   value?: any;
 }
 
-const SearchBar = ({ onClick, onChange, placeholder, value }: Props) => {
+const SearchBarContainer = ({
+  onClick,
+  onChange,
+  placeholder,
+  value
+}: Props) => {
   return (
     <>
       <InputGroup style={{ paddingBottom: "5px" }}>
@@ -28,4 +36,13 @@ const SearchBar = ({ onClick, onChange, placeholder, value }: Props) => {
   );
 };
 
-export { SearchBar };
+const mapStateToProps = (state: any) => ({
+  data: state.database.data,
+  // filteredData: filteredDataSelector(state),
+  loading: state.database.loading,
+  error: state.database.error
+});
+
+export default connect(mapStateToProps, {
+  addData
+})(SearchBarContainer);

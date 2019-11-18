@@ -23,7 +23,7 @@ const Card = ({
   onClickUpdate,
   onClickRemove
 }: Props) => {
-  let myRef: any = React.createRef();
+  console.log(name, login, password, "card");
   return (
     <div className="container">
       <span className="name-login-container">

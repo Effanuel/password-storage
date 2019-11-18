@@ -1,3 +1,3 @@
-export * from "./SearchBar";
+export * from "./ModalComponent";
 export * from "./SpinnerComponent";
 export * from "./Card";
