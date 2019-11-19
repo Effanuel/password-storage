@@ -1,29 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import {
-  fetchData,
-  addData,
-  removeData
-} from "../../redux/actions/databaseActions";
+import { fetchData, removeData } from "../../redux/actions/databaseActions";
 import { modalOpen } from "../../redux/actions/modalActions";
 
-// import { filteredDataSelector } from "../../redux/selectors";
+import { SearchContainerProps, SearchContainerState } from "../../@types";
 
 import { SpinnerComponent, Card } from "../../components";
 import { SearchBarContainer } from "../";
 
 import "./styles.css";
-
-interface Props {
-  items: any;
-  onClick: any;
-  delete?: any;
-}
-interface State {
-  filtered: [object];
-  data: [object];
-}
 
 const initialState = Object.freeze({
   filtered: [],
@@ -35,7 +21,10 @@ const handleAddData = Symbol();
 const handleRemoveData = Symbol();
 const handleUpdateData = Symbol();
 
-class SearchContainer extends React.Component<any, any> {
+class SearchContainer extends React.Component<
+  SearchContainerProps,
+  SearchContainerState
+> {
   readonly state: any = initialState;
 
   componentDidMount() {
@@ -134,14 +123,12 @@ class SearchContainer extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => ({
   data: state.database.data,
-  // filteredData: filteredDataSelector(state),
   loading: state.database.loading,
   error: state.database.error
 });
 
 export default connect(mapStateToProps, {
   fetchData,
-  addData,
   removeData,
   modalOpen
 })(SearchContainer);

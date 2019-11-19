@@ -2,6 +2,18 @@ import React from "react";
 
 import { Button, Modal, Form } from "react-bootstrap";
 
+interface Props {
+  title: string;
+  show: boolean;
+  onSave: () => void;
+  onClose: () => void;
+  p_name: string;
+  p_login: string;
+  p_password: string;
+  onInputChange: (event: any) => void;
+  loadingComponent: any;
+}
+
 const ModalComponent = ({
   title,
   show,
@@ -12,7 +24,7 @@ const ModalComponent = ({
   p_password,
   onInputChange,
   loadingComponent
-}: any): any => {
+}: Props) => {
   return (
     <>
       <Modal show={show} onHide={onClose}>

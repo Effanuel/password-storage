@@ -3,24 +3,31 @@ import React from "react";
 import { connect } from "react-redux";
 import { modalOpen, modalClose } from "../../redux/actions/modalActions";
 
-import { ModalComponent } from "../../components";
+import { ModalComponent, SpinnerComponent } from "../../components";
 
-const initialState = Object.freeze({ show: false });
+import { UpdateModalProps, UpdateModalState } from "../../@types";
 
-const handleShow = Symbol();
+const initialState = Object.freeze({ name: "", login: "", password: "" });
+
 const handleClose = Symbol();
+const handleChange = Symbol();
 
-class UpdateModal extends React.Component<any, any> {
-  [handleShow] = (e: any): any => {
-    this.setState({ show: !this.state.show });
-  };
+class UpdateModal extends React.Component<UpdateModalProps, UpdateModalState> {
+  readonly state: any = initialState;
 
   [handleClose] = (): any => {
     this.props.modalClose();
   };
 
+  [handleChange] = (event: any): any => {
+    const { id, value } = event.target;
+    this.setState({
+      [id]: value
+    } as Pick<UpdateModalState, keyof UpdateModalState>);
+  };
+
   render() {
-    const { showModal } = this.props;
+    const { showModal, loading } = this.props;
     return (
       <>
         <ModalComponent
@@ -31,6 +38,8 @@ class UpdateModal extends React.Component<any, any> {
           p_name="Name"
           p_password="Password"
           p_login="Login"
+          onInputChange={this[handleChange]}
+          loadingComponent={loading ? <SpinnerComponent /> : null}
         />
       </>
     );
@@ -38,7 +47,8 @@ class UpdateModal extends React.Component<any, any> {
 }
 
 const mapStateToProps = (state: any) => ({
-  showModal: state.modal.showModal
+  showModal: state.modal.showModal,
+  loading: state.database.loading
 });
 
 export default connect(mapStateToProps, {

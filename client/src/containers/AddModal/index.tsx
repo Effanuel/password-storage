@@ -6,20 +6,22 @@ import { addData } from "../../redux/actions/databaseActions";
 
 import { ModalComponent, SpinnerComponent } from "../../components";
 
+import { AddModalState, AddModalProps } from "../../@types";
+
 const initialState = Object.freeze({ name: "", login: "", password: "" });
 
 const handleSave = Symbol();
 const handleClose = Symbol();
 const handleChange = Symbol();
 
-class AddModal extends React.Component<any, any> {
-  readonly state: any = initialState;
+class AddModal extends React.Component<AddModalProps, AddModalState> {
+  readonly state: AddModalState = initialState;
 
-  [handleSave] = (e: any): any => {
+  [handleSave] = (): void => {
     this.props.addData(this.state);
   };
 
-  [handleClose] = (): any => {
+  [handleClose] = (): void => {
     this.props.modalClose();
     this.setState(initialState);
   };
@@ -27,7 +29,7 @@ class AddModal extends React.Component<any, any> {
     const { id, value } = event.target;
     this.setState({
       [id]: value
-    });
+    } as Pick<AddModalState, keyof AddModalState>);
   };
 
   render() {
