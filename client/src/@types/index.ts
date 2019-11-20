@@ -22,8 +22,10 @@ export type UpdateModalState = {
 export type UpdateModalProps = {
   showModal: null | string;
   loading: boolean;
+  selectedName: object;
   modalOpen: (payload: string) => void;
   modalClose: () => void;
+  updateData: (payload: object) => void;
 };
 
 export type SearchContainerState = {
@@ -35,7 +37,9 @@ export type SearchContainerProps = {
   data: any;
   loading: boolean;
   error: string;
+  showModal: any;
   fetchData: () => void;
   removeData: (payload: string) => void;
   modalOpen: (payload: string) => void;
+  selectName: (payload: object) => void;
 };

@@ -34,6 +34,7 @@ class AddModal extends React.Component<AddModalProps, AddModalState> {
 
   render() {
     const { showModal, loading } = this.props;
+    const { name, login, password } = this.state;
     return (
       <>
         <ModalComponent
@@ -46,6 +47,7 @@ class AddModal extends React.Component<AddModalProps, AddModalState> {
           p_password="Password"
           onInputChange={this[handleChange]}
           loadingComponent={loading ? <SpinnerComponent /> : null}
+          disabled={!name || !login || !password}
         />
       </>
     );

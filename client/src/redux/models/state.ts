@@ -14,7 +14,7 @@ export interface DatabaseState {
   error: string;
   showModalUpdate?: boolean;
   showModalAdd?: boolean;
-  selectedName?: any;
+  selectedName: any;
 }
 
 export interface ModalState {

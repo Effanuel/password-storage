@@ -14,7 +14,8 @@ Router.get("/getData", (req, res) => {
 // this is our update method
 // this method overwrites existing data in our database
 Router.post("/updateData", (req, res) => {
-  const { filter, update } = req.body;
+  const { filter, update } = req.body.data;
+  console.log(filter, update, "BACKEND");
   Data.findOneAndUpdate(filter, update, err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });

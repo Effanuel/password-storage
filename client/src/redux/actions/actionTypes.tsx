@@ -17,3 +17,6 @@ export type MODAL_OPEN = "MODAL_OPEN";
 
 export const MODAL_CLOSE = "MODAL_CLOSE";
 export type MODAL_CLOSE = "MODAL_CLOSE";
+
+export const SELECT_NAME = "SELECT_NAME";
+export type SELECT_NAME = "SELECT_NAME";

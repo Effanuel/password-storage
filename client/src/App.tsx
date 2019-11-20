@@ -2,7 +2,7 @@
 import React from "react";
 
 // import { SpinnerComponent } from "./components";
-import { SearchContainer, AddModal, UpdateModal } from "./containers";
+import { SearchContainer } from "./containers";
 
 class App extends React.Component<any, any> {
   // // our update method that uses our backend api
@@ -28,8 +28,6 @@ class App extends React.Component<any, any> {
     return (
       <>
         <SearchContainer />
-        <AddModal />
-        <UpdateModal />
       </>
     );
   }

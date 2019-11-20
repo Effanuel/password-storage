@@ -12,6 +12,7 @@ interface Props {
   p_password: string;
   onInputChange: (event: any) => void;
   loadingComponent: any;
+  disabled?: boolean;
 }
 
 const ModalComponent = ({
@@ -23,7 +24,8 @@ const ModalComponent = ({
   p_login,
   p_password,
   onInputChange,
-  loadingComponent
+  loadingComponent,
+  disabled
 }: Props) => {
   return (
     <>
@@ -55,6 +57,7 @@ const ModalComponent = ({
                 id="password"
                 placeholder={p_password}
                 onChange={onInputChange}
+                type="password"
               />
             </Form.Group>
           </Form>
@@ -63,7 +66,7 @@ const ModalComponent = ({
           <Button variant="secondary" onClick={onClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={onSave}>
+          <Button variant="primary" onClick={onSave} disabled={disabled}>
             {loadingComponent || "Save Changes"}
           </Button>
         </Modal.Footer>

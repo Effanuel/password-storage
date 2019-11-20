@@ -22,11 +22,17 @@ interface AddDataSuccess {
   payload: any;
 }
 
+interface SelectName {
+  type: constants.SELECT_NAME;
+  payload: any;
+}
+
 export type Actions =
   | DataLoading
   | FetchDataSuccess
   | FetchDataError
-  | AddDataSuccess;
+  | AddDataSuccess
+  | SelectName;
 
 export const fetchData = (payload?: any): Thunk => async dispatch => {
   try {
@@ -87,18 +93,25 @@ export const updateData = ({
 }: any): Thunk => async dispatch => {
   try {
     dispatch(dataLoading());
-    const response = await axios.delete("/api/updateData", {
+    const response = await axios.post("/api/updateData", {
       data: {
-        filter: name,
+        filter: { name: name },
         update: { login: login, password: password }
       }
     });
     console.log(response);
-    dispatch(removeDataSuccess());
+    dispatch(modalClose());
     dispatch(fetchData());
   } catch (err) {
     dispatch(fetchDataError(err));
   }
+};
+
+export const selectName = (payload: any): any => {
+  return {
+    type: constants.SELECT_NAME,
+    payload: payload
+  };
 };
 
 function dataLoading(payload?: any): any {

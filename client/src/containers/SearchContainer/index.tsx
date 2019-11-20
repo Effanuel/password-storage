@@ -1,7 +1,11 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { connect } from "react-redux";
 
-import { fetchData, removeData } from "../../redux/actions/databaseActions";
+import {
+  fetchData,
+  removeData,
+  selectName
+} from "../../redux/actions/databaseActions";
 import { modalOpen } from "../../redux/actions/modalActions";
 
 import { SearchContainerProps, SearchContainerState } from "../../@types";
@@ -10,6 +14,9 @@ import { SpinnerComponent, Card } from "../../components";
 import { SearchBarContainer } from "../";
 
 import "./styles.css";
+
+const AddModal = lazy(() => import("../AddModal"));
+const UpdateModal = lazy(() => import("../UpdateModal"));
 
 const initialState = Object.freeze({
   filtered: [],
@@ -20,6 +27,8 @@ const handleChange = Symbol();
 const handleAddData = Symbol();
 const handleRemoveData = Symbol();
 const handleUpdateData = Symbol();
+
+const returnModals = Symbol();
 
 class SearchContainer extends React.Component<
   SearchContainerProps,
@@ -56,15 +65,18 @@ class SearchContainer extends React.Component<
   [handleAddData] = (): void => {
     this.props.modalOpen("addModal");
   };
-  [handleRemoveData] = (e: any, value: any): void => {
+  [handleRemoveData] = (e: any, value: string): void => {
     console.log(value);
     this.props.removeData(value);
   };
-  [handleUpdateData] = (e: any, name: any, login: any, password: any): void => {
-    console.log(name, login, password);
+  [handleUpdateData] = (
+    e: any,
+    name: string,
+    login: string,
+    password: string
+  ): void => {
+    this.props.selectName({ name: name, login: login, password: password });
     this.props.modalOpen("updateModal");
-    // SET REDUX STATE NAME LGONI PASSWORD
-    // SHOW MODAL
   };
 
   [handleChange] = (e: any) => {
@@ -89,34 +101,47 @@ class SearchContainer extends React.Component<
   };
 
   render() {
-    const { data, loading, error } = this.props;
+    const { data, loading, error, showModal } = this.props;
     const { filtered } = this.state;
+
     return (
-      <div className="search-container">
-        <SearchBarContainer
-          onChange={this[handleChange]}
-          onClick={this[handleAddData]}
-          placeholder="Search..."
-        />
-        {loading ? (
-          <SpinnerComponent />
-        ) : filtered &&
-          filtered.constructor === Array &&
-          filtered.length === 0 ? (
-          "No entries found."
-        ) : (
-          filtered.map((item: any, i: any) => (
-            <Card
-              key={i}
-              name={item.name}
-              login={item.login}
-              password={item.password}
-              onClickRemove={this[handleRemoveData]}
-              onClickUpdate={this[handleUpdateData]}
-            />
-          ))
+      <>
+        <div className="search-container">
+          <SearchBarContainer
+            onChange={this[handleChange]}
+            onClick={this[handleAddData]}
+            placeholder="Search..."
+          />
+          {loading ? (
+            <SpinnerComponent />
+          ) : filtered &&
+            filtered.constructor === Array &&
+            filtered.length === 0 ? (
+            "No entries found."
+          ) : (
+            filtered.map((item: any, i: any) => (
+              <Card
+                key={i}
+                name={item.name}
+                login={item.login}
+                password={item.password}
+                onClickRemove={this[handleRemoveData]}
+                onClickUpdate={this[handleUpdateData]}
+              />
+            ))
+          )}
+        </div>
+        {showModal === "addModal" && (
+          <Suspense fallback={<div>Loading...</div>}>
+            <AddModal />
+          </Suspense>
         )}
-      </div>
+        {showModal === "updateModal" && (
+          <Suspense fallback={<div>Loading...</div>}>
+            <UpdateModal />
+          </Suspense>
+        )}
+      </>
     );
   }
 }
@@ -124,11 +149,13 @@ class SearchContainer extends React.Component<
 const mapStateToProps = (state: any) => ({
   data: state.database.data,
   loading: state.database.loading,
-  error: state.database.error
+  error: state.database.error,
+  showModal: state.modal.showModal
 });
 
 export default connect(mapStateToProps, {
   fetchData,
   removeData,
-  modalOpen
+  modalOpen,
+  selectName
 })(SearchContainer);
