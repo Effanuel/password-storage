@@ -3,3 +3,21 @@
   padding-top: 50px;
   width: 50%;
 }
+
+@media screen and (max-width: 800px) {
+  .search-container {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .search-container {
+    width: 66.66vw;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .search-container {
+    width: 200px;
+  }
+}

@@ -23,8 +23,6 @@ class App extends React.Component<any, any> {
   // };
 
   render() {
-    // const { list, data } = this.state;
-    // const { data, loading, error } = this.props;
     return (
       <>
         <SearchContainer />
