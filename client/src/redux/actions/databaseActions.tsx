@@ -1,6 +1,8 @@
 import * as constants from "./actionTypes";
 import axios from "axios";
 
+import { encrypt, decrypt } from "./algo";
+
 import { Thunk } from "../models/state";
 import { modalClose } from "./modalActions";
 
@@ -34,6 +36,16 @@ export type Actions =
   | AddDataSuccess
   | SelectName;
 
+const encryptData = async (payload: string): Promise<string> => {
+  try {
+    const master_key = "hello";
+    const encrypted = await encrypt(master_key, payload);
+    return encrypted;
+  } catch (err) {
+    return "error";
+  }
+};
+
 export const fetchData = (payload?: any): Thunk => async dispatch => {
   try {
     dispatch(dataLoading());
@@ -49,16 +61,14 @@ export const fetchData = (payload?: any): Thunk => async dispatch => {
 export const addData = (payload: any): Thunk => async dispatch => {
   try {
     dispatch(dataLoading());
-    // let currentIds = this.state.data.map((data: any) => data.id);
-    // let idToBeAdded = 0;
-    // while (currentIds.includes(idToBeAdded)) {
-    //   ++idToBeAdded;
-    // }
     const { name, login, password } = payload;
+    // Encrypt password
+    const encrypted_password = await encryptData(password);
+
     const response = await axios.post("/api/putData", {
-      name: name,
-      login: login,
-      password: password
+      name,
+      login,
+      password: encrypted_password
     });
     console.log("ADDDATARESPONSE", response);
     // dispatch(addDataSuccess(data));

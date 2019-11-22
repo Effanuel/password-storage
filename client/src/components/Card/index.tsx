@@ -14,6 +14,7 @@ interface Props {
     password: string
   ) => void;
   onClickRemove: (e: any, name: string) => void;
+  onClickCopy: (e: any, password: string) => any;
 }
 
 const Card = ({
@@ -21,12 +22,17 @@ const Card = ({
   login,
   password,
   onClickUpdate,
-  onClickRemove
+  onClickRemove,
+  onClickCopy
 }: Props) => {
   console.log(name, login, password, "card");
+
   return (
     <div className="container">
-      <span className="name-login-container">
+      <span
+        className="name-login-container"
+        onClick={(e: any) => onClickCopy(e, password)}
+      >
         <span className="name-style">{name} </span>
         <span className="login-style">{login}</span>
       </span>

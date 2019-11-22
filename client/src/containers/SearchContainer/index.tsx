@@ -1,6 +1,9 @@
 import React, { Suspense, lazy } from "react";
 import { connect } from "react-redux";
 
+import AES from "crypto-js/aes";
+import { enc } from "crypto-js";
+
 import {
   fetchData,
   removeData,
@@ -27,6 +30,7 @@ const handleChange = Symbol();
 const handleAddData = Symbol();
 const handleRemoveData = Symbol();
 const handleUpdateData = Symbol();
+const handleCopyPassword = Symbol();
 
 const returnModals = Symbol();
 
@@ -100,6 +104,17 @@ class SearchContainer extends React.Component<
     });
   };
 
+  [handleCopyPassword] = (e: any, password: string): void => {
+    const textField = document.createElement("textarea");
+    // Decrypt password with a phrase
+    const decrypted = AES.decrypt(password, "abc").toString(enc.Utf8);
+    textField.innerText = decrypted;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+  };
+
   render() {
     const { data, loading, error, showModal } = this.props;
     const { filtered } = this.state;
@@ -127,6 +142,7 @@ class SearchContainer extends React.Component<
                 password={item.password}
                 onClickRemove={this[handleRemoveData]}
                 onClickUpdate={this[handleUpdateData]}
+                onClickCopy={this[handleCopyPassword]}
               />
             ))
           )}
