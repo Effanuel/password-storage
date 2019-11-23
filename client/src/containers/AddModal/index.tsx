@@ -1,7 +1,7 @@
 import React from "react";
 // REDUX
 import { connect } from "react-redux";
-import { modalOpen, modalClose } from "../../redux/actions/modalActions";
+import { modalClose } from "../../redux/actions/modalActions";
 import { addData } from "../../redux/actions/databaseActions";
 import {
   modalShowModalSelector,
@@ -64,7 +64,6 @@ const mapStateToProps = (state: any) => ({
 });
 
 export default connect(mapStateToProps, {
-  modalOpen,
   modalClose,
   addData
 })(AddModal);

@@ -9,7 +9,6 @@ export type AddModalState = {
 export type AddModalProps = {
   showModal: null | string;
   loading: boolean;
-  modalOpen: (payload: string) => void;
   modalClose: () => void;
   addData: (payload: AddModalState) => void;
 };

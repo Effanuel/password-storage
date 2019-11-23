@@ -40,8 +40,6 @@ const handleRemoveData = Symbol();
 const handleUpdateData = Symbol();
 const handleCopyPassword = Symbol();
 
-const returnModals = Symbol();
-
 class SearchContainer extends React.Component<
   SearchContainerProps,
   SearchContainerState

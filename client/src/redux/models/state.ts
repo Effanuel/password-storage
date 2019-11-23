@@ -12,8 +12,6 @@ export interface DatabaseState {
   data: any;
   loading: boolean;
   error: string;
-  showModalUpdate?: boolean;
-  showModalAdd?: boolean;
   selectedName: any;
 }
 

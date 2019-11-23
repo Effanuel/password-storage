@@ -1,7 +1,7 @@
 import * as constants from "./actionTypes";
 import axios from "axios";
 
-import { encrypt, decrypt } from "./algo";
+import { encrypt, decrypt } from "../../utils/algo";
 
 import { Thunk } from "../models/state";
 import { modalClose } from "./modalActions";
@@ -42,7 +42,7 @@ const encryptData = async (payload: string): Promise<string> => {
     const encrypted = await encrypt(master_key, payload);
     return encrypted;
   } catch (err) {
-    return "error";
+    throw "Encryption failed.";
   }
 };
 
