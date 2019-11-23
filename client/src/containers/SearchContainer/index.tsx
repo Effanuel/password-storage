@@ -1,9 +1,7 @@
 import React, { Suspense, lazy } from "react";
+
+// REDUX
 import { connect } from "react-redux";
-
-import AES from "crypto-js/aes";
-import { enc } from "crypto-js";
-
 import {
   fetchData,
   removeData,
@@ -11,13 +9,23 @@ import {
 } from "../../redux/actions/databaseActions";
 import { modalOpen } from "../../redux/actions/modalActions";
 
-import { SearchContainerProps, SearchContainerState } from "../../@types";
+import {
+  databaseDataSelector,
+  databaseLoadingSelector,
+  databaseErrorSelector,
+  modalShowModalSelector
+} from "../../redux/selectors";
 
+// COMPONENTS
+import { SearchContainerProps, SearchContainerState } from "../../@types";
 import { SpinnerComponent, Card } from "../../components";
 import { SearchBarContainer } from "../";
 
+// UTIL
 import "./styles.css";
+import { decrypt } from "../../utils/algo";
 
+// LAZY
 const AddModal = lazy(() => import("../AddModal"));
 const UpdateModal = lazy(() => import("../UpdateModal"));
 
@@ -104,11 +112,11 @@ class SearchContainer extends React.Component<
     });
   };
 
-  [handleCopyPassword] = (e: any, password: string): void => {
+  [handleCopyPassword] = async (e: any, password: string): Promise<any> => {
     const textField = document.createElement("textarea");
     // Decrypt password with a phrase
-    const decrypted = AES.decrypt(password, "abc").toString(enc.Utf8);
-    textField.innerText = decrypted;
+    const decrypted_password = await decrypt("hello", password);
+    textField.innerText = decrypted_password;
     document.body.appendChild(textField);
     textField.select();
     document.execCommand("copy");
@@ -163,10 +171,10 @@ class SearchContainer extends React.Component<
 }
 
 const mapStateToProps = (state: any) => ({
-  data: state.database.data,
-  loading: state.database.loading,
-  error: state.database.error,
-  showModal: state.modal.showModal
+  data: databaseDataSelector(state),
+  loading: databaseLoadingSelector(state),
+  error: databaseErrorSelector(state),
+  showModal: modalShowModalSelector(state)
 });
 
 export default connect(mapStateToProps, {

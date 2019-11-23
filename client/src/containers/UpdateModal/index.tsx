@@ -1,9 +1,15 @@
 import React from "react";
 
+// REDUX
 import { connect } from "react-redux";
 import { modalOpen, modalClose } from "../../redux/actions/modalActions";
 import { updateData } from "../../redux/actions/databaseActions";
-
+import {
+  modalShowModalSelector,
+  databaseLoadingSelector,
+  databaseSelectedNameSelector
+} from "../../redux/selectors";
+// COMPONENTS
 import { ModalComponent, SpinnerComponent } from "../../components";
 
 import { UpdateModalProps, UpdateModalState } from "../../@types";
@@ -71,9 +77,9 @@ class UpdateModal extends React.Component<UpdateModalProps, UpdateModalState> {
 }
 
 const mapStateToProps = (state: any) => ({
-  showModal: state.modal.showModal,
-  loading: state.database.loading,
-  selectedName: state.database.selectedName
+  showModal: modalShowModalSelector(state),
+  loading: databaseLoadingSelector(state),
+  selectedName: databaseSelectedNameSelector(state)
 });
 
 export default connect(mapStateToProps, {

@@ -1,8 +1,15 @@
 import React from "react";
 
+// REDUX
 import { connect } from "react-redux";
 import { addData } from "../../redux/actions/databaseActions";
+import {
+  databaseDataSelector,
+  databaseLoadingSelector,
+  databaseErrorSelector
+} from "../../redux/selectors";
 
+// COMPONENTS
 import { Form, InputGroup } from "react-bootstrap";
 
 interface Props {
@@ -37,10 +44,9 @@ const SearchBarContainer = ({
 };
 
 const mapStateToProps = (state: any) => ({
-  data: state.database.data,
-  // filteredData: filteredDataSelector(state),
-  loading: state.database.loading,
-  error: state.database.error
+  data: databaseDataSelector(state),
+  loading: databaseLoadingSelector(state),
+  error: databaseErrorSelector(state)
 });
 
 export default connect(mapStateToProps, {
