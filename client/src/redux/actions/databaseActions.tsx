@@ -1,6 +1,5 @@
 import * as constants from "./actionTypes";
-import axios from "axios";
-
+import axios from "../../utils/axios";
 import { encrypt, decrypt } from "../../utils/algo";
 
 import { Thunk } from "../models/state";
@@ -26,7 +25,7 @@ interface AddDataSuccess {
 
 interface SelectName {
   type: constants.SELECT_NAME;
-  payload: any;
+  payload: object;
 }
 
 export type Actions =

@@ -20,3 +20,19 @@ export type MODAL_CLOSE = "MODAL_CLOSE";
 
 export const SELECT_NAME = "SELECT_NAME";
 export type SELECT_NAME = "SELECT_NAME";
+
+//user
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export type LOGIN_SUCCESS = "LOGIN_SUCCESS";
+
+export const LOGIN_ERROR = "LOGIN_ERROR";
+export type LOGIN_ERROR = "LOGIN_ERROR";
+
+export const LOADING = "LOADING";
+export type LOADING = "LOADING";
+
+export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+export type SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+
+export const SIGNUP_ERROR = "SIGNUP_ERROR";
+export type SIGNUP_ERROR = "SIGNUP_ERROR";
