@@ -1,6 +1,8 @@
 // /client/App.js
 import React from "react";
 
+import "./App.css";
+
 // import { SpinnerComponent } from "./components";
 import { SearchContainer } from "./containers";
 
@@ -24,9 +26,9 @@ class App extends React.Component<any, any> {
 
   render() {
     return (
-      <>
+      <div className="main-container">
         <SearchContainer />
-      </>
+      </div>
     );
   }
 }
