@@ -13,6 +13,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "types": ["jest"],
+    "typeRoots": ["./src/@types", "node_modules/@types"],
     "jsx": "react"
   },
   "exclude": [
@@ -20,7 +22,9 @@
     "src/build",
     "public",
     "src/__tests__",
-    "src/css"
+    "src/css",
+    "**/*.spec.ts",
+    "**/*.test.tsx"
   ],
-  "include": ["src"]
+  "include": ["./src/**/*.tsx", "./src/**/*.ts"]
 }
