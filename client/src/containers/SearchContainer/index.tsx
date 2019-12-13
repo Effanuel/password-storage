@@ -18,7 +18,7 @@ import {
 
 // COMPONENTS
 import { SearchContainerProps, SearchContainerState } from "../../@types";
-import { SpinnerComponent, Card } from "../../components";
+import { SpinnerComponent, Card, Loader } from "../../components";
 import { SearchBarContainer } from "../";
 
 // UTIL
@@ -40,7 +40,7 @@ const handleRemoveData = Symbol();
 const handleUpdateData = Symbol();
 const handleCopyPassword = Symbol();
 
-class SearchContainer extends React.Component<
+class SearchContainer extends React.PureComponent<
   SearchContainerProps,
   SearchContainerState
 > {
@@ -128,30 +128,25 @@ class SearchContainer extends React.Component<
     return (
       <>
         <div className="search-container">
+          <Loader loading={loading} height={5} color="#00ca45" />
           <SearchBarContainer
             onChange={this[handleChange]}
             onClick={this[handleAddData]}
             placeholder="Search..."
           />
-          {loading ? (
-            <SpinnerComponent />
-          ) : filtered &&
-            filtered.constructor === Array &&
-            filtered.length === 0 ? (
-            "No entries found."
-          ) : (
-            filtered.map((item: any, i: any) => (
-              <Card
-                key={i}
-                name={item.name}
-                login={item.login}
-                password={item.password}
-                onClickRemove={this[handleRemoveData]}
-                onClickUpdate={this[handleUpdateData]}
-                onClickCopy={this[handleCopyPassword]}
-              />
-            ))
-          )}
+          {filtered && filtered.constructor === Array && filtered.length === 0
+            ? "No entries found."
+            : filtered.map((item: any, i: any) => (
+                <Card
+                  key={i}
+                  name={item.name}
+                  login={item.login}
+                  password={item.password}
+                  onClickRemove={this[handleRemoveData]}
+                  onClickUpdate={this[handleUpdateData]}
+                  onClickCopy={this[handleCopyPassword]}
+                />
+              ))}
         </div>
         {showModal === "addModal" && (
           <Suspense fallback={<div>Loading...</div>}>
