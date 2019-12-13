@@ -1,5 +1,6 @@
 import React from "react";
 
+import "./styles.css";
 // COMPONENTS
 import { Form, InputGroup } from "react-bootstrap";
 
@@ -21,13 +22,14 @@ const SearchBarContainer = ({
       <InputGroup style={{ paddingBottom: "5px" }}>
         <Form.Control
           type="text"
+          className="input"
           placeholder={placeholder}
           value={value}
           onChange={onChange}
           required
         />
         <InputGroup.Prepend onClick={onClick}>
-          <InputGroup.Text>Add</InputGroup.Text>
+          <InputGroup.Text className="add-button">Add</InputGroup.Text>
         </InputGroup.Prepend>
       </InputGroup>
     </>

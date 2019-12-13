@@ -14,7 +14,7 @@ interface Props {
     password: string
   ) => void;
   onClickRemove: (e: any, name: string) => void;
-  onClickCopy: (e: any, password: string) => any;
+  onClickCopy: (e: any, password: string) => void;
 }
 
 const Card = ({
@@ -39,11 +39,12 @@ const Card = ({
       <div className="button-container">
         <Button
           variant="info"
+          id='update'
           onClick={(e: any) => onClickUpdate(e, name, login, password)}
         >
           /
         </Button>
-        <Button variant="danger" onClick={(e: any) => onClickRemove(e, name)}>
+        <Button variant="danger" id='remove' onClick={(e: any) => onClickRemove(e, name)}>
           X
         </Button>
       </div>

@@ -1,3 +1,5 @@
+@import "../../css/root.css";
+
 .container {
   margin: 0px;
   margin-bottom: 5px;
@@ -6,12 +8,12 @@
   width: 100%;
   display: flex;
   align-items: center;
-  border: 1px solid black;
-  background-color: lightgreen;
+  background-color: var(--primaryColor);
+  box-shadow: 2px 2px black;
 }
 
 .container:hover {
-  background-color: green;
+  box-shadow: 2px 2px var(--accentColor);
   transition: 0.1s;
 }
 
@@ -40,7 +42,28 @@
 
 .name-style {
   font-weight: bold;
-  color: blue;
+  color: var(--accentColor);
+  text-shadow: 1px 1px black;
 }
-/* .login-style {
-} */
+.login-style {
+  color: white;
+}
+
+#update {
+  border-radius: 0px;
+  margin-right: 5px;
+  border: 1px solid black;
+}
+
+#remove {
+  border-radius: 0px;
+  border: 1px solid black;
+}
+
+#update:hover {
+  border: 1px solid darkred;
+}
+
+#remove:hover {
+  border: 1px solid darkred;
+}
