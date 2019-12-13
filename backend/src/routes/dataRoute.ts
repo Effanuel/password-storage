@@ -1,10 +1,10 @@
 import express from "express";
-import Data from "../data";
+import { Data } from "../models";
+import { auth } from "../middleware/auth";
 const Router = express.Router();
-
 // this is our get method
 // this method fetches all available data in our database
-Router.get("/getData", (req, res) => {
+Router.get("/getData", async (req, res) => {
   Data.find((err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
@@ -13,7 +13,7 @@ Router.get("/getData", (req, res) => {
 
 // this is our update method
 // this method overwrites existing data in our database
-Router.post("/updateData", (req, res) => {
+Router.post("/updateData", async (req, res) => {
   const { filter, update } = req.body.data;
   console.log(filter, update, "BACKEND");
   Data.findOneAndUpdate(filter, update, err => {
@@ -24,10 +24,10 @@ Router.post("/updateData", (req, res) => {
 
 // this is our delete method
 // this method removes existing data in our database
-Router.delete("/deleteData", (req, res) => {
-  console.log(req.body);
+Router.delete("/deleteData", async (req, res) => {
   const { name } = req.body;
   Data.findOneAndRemove({ name: name }, err => {
+    console.log(name);
     if (err) return res.send(err);
     return res.json({ success: true });
   });
@@ -35,9 +35,7 @@ Router.delete("/deleteData", (req, res) => {
 
 // this is our create methid
 // this method adds new data in our database
-Router.post("/putData", (req, res) => {
-  let data: any = new Data();
-
+Router.post("/putData", async (req, res) => {
   const { name, login, password } = req.body;
 
   if (!name || !login || !password) {
@@ -46,9 +44,7 @@ Router.post("/putData", (req, res) => {
       error: "INVALID INPUTS"
     });
   }
-  data.name = name;
-  data.login = login;
-  data.password = password;
+  let data: any = new Data(req.body);
   data.save((err: any) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });

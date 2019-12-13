@@ -5,7 +5,7 @@ import helmet from "helmet";
 import path from "path";
 import mongoose from "mongoose";
 
-import Router from "./routes/route";
+import { userRoute, dataRoute } from "./routes";
 import morgan from "morgan";
 import { logger } from "./util/logger";
 
@@ -32,8 +32,16 @@ if (process.env.NODE_ENV != "development ") {
   });
 }
 
-app.use("/api", Router);
-
+app.use("/api", dataRoute);
+app.use("/user", userRoute);
+app.use((req, res, next) => {
+  // if (req.method === "GET") {
+  //   res.send("GET DISABLED");
+  // } else {
+  //   next();
+  // }
+  next();
+});
 // const pass = config.pass;
 // const user = config.user;
 // const dbRoute = `mongodb+srv://${user}:${pass}@cluster0-hoja9.mongodb.net/test?retryWrites=true&w=majority`;
