@@ -1,6 +1,10 @@
 import React from "react";
 
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, ProgressBar } from "react-bootstrap";
+
+import "./styles.css";
+
+import { styleProgress } from "../../utils/functions";
 
 interface Props {
   title: string;
@@ -11,8 +15,10 @@ interface Props {
   p_login: string;
   p_password: string;
   onInputChange: (event: any) => void;
+  onPasswordChange?: (event?: any) => void;
   loadingComponent: any;
   disabled?: boolean;
+  progress?: any;
 }
 
 const ModalComponent = ({
@@ -24,8 +30,10 @@ const ModalComponent = ({
   p_login,
   p_password,
   onInputChange,
+  onPasswordChange,
   loadingComponent,
-  disabled
+  disabled,
+  progress
 }: Props) => {
   return (
     <>
@@ -53,11 +61,17 @@ const ModalComponent = ({
             </Form.Group>
             <Form.Group>
               <Form.Label>Password</Form.Label>
+              <h1>Generate password</h1>
               <Form.Control
                 id="password"
                 placeholder={p_password}
-                onChange={onInputChange}
+                onChange={onPasswordChange}
                 type="password"
+              />
+              <ProgressBar
+                variant={styleProgress(progress)}
+                now={progress}
+                style={{ height: "5px" }}
               />
             </Form.Group>
           </Form>

@@ -8,15 +8,25 @@ import {
   databaseLoadingSelector
 } from "../../redux/selectors";
 // COMPONENTS
-import { ModalComponent, SpinnerComponent } from "../../components";
+import { ModalComponent } from "../../components";
+import { ClipLoader } from "react-spinners";
 
 import { AddModalState, AddModalProps } from "../../@types";
 
-const initialState = Object.freeze({ name: "", login: "", password: "" });
+// FUNCTIONS
+import { scorePassword } from "../../utils/functions";
+
+const initialState = Object.freeze({
+  name: "",
+  login: "",
+  password: "",
+  passStr: 0
+});
 
 const handleSave = Symbol();
 const handleClose = Symbol();
 const handleChange = Symbol();
+const handlePasswordChange = Symbol();
 
 class AddModal extends React.Component<AddModalProps, AddModalState> {
   readonly state: AddModalState = initialState;
@@ -35,10 +45,20 @@ class AddModal extends React.Component<AddModalProps, AddModalState> {
       [id]: value
     } as Pick<AddModalState, keyof AddModalState>);
   };
+  [handlePasswordChange] = (event: any): void => {
+    const { value } = event.target;
+    const { password } = this.state;
+    this.setState({
+      password: value
+    } as Pick<AddModalState, keyof AddModalState>);
+
+    console.log(password, !password);
+    this.setState({ passStr: scorePassword(value) });
+  };
 
   render() {
     const { showModal, loading } = this.props;
-    const { name, login, password } = this.state;
+    const { name, login, password, passStr } = this.state;
     return (
       <>
         <ModalComponent
@@ -50,8 +70,10 @@ class AddModal extends React.Component<AddModalProps, AddModalState> {
           p_login="Login"
           p_password="Password"
           onInputChange={this[handleChange]}
-          loadingComponent={loading ? <SpinnerComponent /> : null}
+          onPasswordChange={this[handlePasswordChange]}
+          loadingComponent={loading ? <ClipLoader size={15} /> : null}
           disabled={!name || !login || !password}
+          progress={passStr}
         />
       </>
     );
