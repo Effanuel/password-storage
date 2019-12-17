@@ -17,12 +17,28 @@
   transition: 0.1s;
 }
 
-.Button {
+.buttonStyle {
   border-radius: 0px;
   padding: 0px;
-  width: 20px;
-  height: 20px;
+  width: 35px;
+  height: 35px;
   text-align: center;
+  border-radius: 0px;
+  border: none;
+  background-color: transparent;
+  color: white;
+}
+
+#deleteStyle:hover {
+  cursor: pointer;
+  color: #d50000;
+  transition: 0.1s;
+}
+
+#edit:hover {
+  cursor: pointer;
+  color: #1e88e5;
+  transition: 0.1s;
 }
 
 .button-container {
@@ -33,37 +49,24 @@
   /* background-color: red; */
 }
 
-.name-login-container {
+.nameLoginContainer {
   display: inline-block;
   vertical-align: middle;
   flex: 3;
+  padding-left: 10px;
   /* background-color: green; */
 }
 
-.name-style {
+.nameStyle {
   font-weight: bold;
   color: var(--accentColor);
   text-shadow: 1px 1px black;
 }
-.login-style {
+.loginStyle {
   color: white;
 }
 
-#update {
-  border-radius: 0px;
-  margin-right: 5px;
-  border: 1px solid black;
-}
-
-#remove {
-  border-radius: 0px;
-  border: 1px solid black;
-}
-
-#update:hover {
-  border: 1px solid darkred;
-}
-
-#remove:hover {
-  border: 1px solid darkred;
+.copiedStyle {
+  font-size: 14px;
+  color: #c8e6c9;
 }

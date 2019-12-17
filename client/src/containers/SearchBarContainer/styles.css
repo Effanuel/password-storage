@@ -23,6 +23,13 @@
   color: white;
   border: none;
   margin-left: 5px;
+  cursor: pointer;
+  box-shadow: 2px 2px black;
+}
+
+.add-button:hover {
+  color: var(--accentColor);
+  transition: 0.1s;
 }
 
 .add-button:hover {

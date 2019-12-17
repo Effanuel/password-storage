@@ -1,5 +1,9 @@
 @import "./css/root.css";
 
+body {
+  background-color: var(--secondaryColor);
+}
+
 .main-container {
   background-color: var(--secondaryColor);
 }

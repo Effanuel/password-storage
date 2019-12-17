@@ -1,0 +1,60 @@
+@import "../../css/root.css";
+
+.pass-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.generate-style {
+  margin-left: 5px;
+}
+
+.generate {
+  border-radius: 0px;
+  padding: 0px;
+  margin: 5px;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  border-radius: 0px;
+  border: none;
+  color: black;
+}
+
+.generate:hover {
+  color: var(--accentColor);
+  transition: 0.1s;
+}
+
+.modal-style {
+  border: 1px solid var(--accentColor);
+  border-radius: 0px !important;
+}
+.modal-header-style,
+.modal-body-style,
+.modal-footer-style {
+  background-color: var(--primaryColor);
+  color: white;
+  margin: 0px;
+  border: none;
+}
+.modal-header-style {
+  padding-bottom: 0px;
+}
+
+.modal-footer-style {
+  padding-top: 0px;
+}
+
+.modal-content {
+  border-radius: 0px;
+  background-color: var(--primaryColor);
+}
+
+.progressBarStyle {
+  height: 5px;
+  margin-top: 2px;
+  border-radius: 0px;
+  background-color: var(--secondaryColor);
+}
