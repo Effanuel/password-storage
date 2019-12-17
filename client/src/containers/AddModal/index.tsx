@@ -14,7 +14,7 @@ import { ClipLoader } from "react-spinners";
 import { AddModalState, AddModalProps } from "../../@types";
 
 // FUNCTIONS
-import { scorePassword, generatePassword } from "../../utils/functions";
+import { scorePassword } from "../../utils/functions";
 
 const initialState = Object.freeze({
   name: "",
@@ -27,7 +27,6 @@ const handleSave = Symbol();
 const handleClose = Symbol();
 const handleChange = Symbol();
 const handlePasswordChange = Symbol();
-const handleGeneratePassword = Symbol();
 
 class AddModal extends React.Component<AddModalProps, AddModalState> {
   readonly state: AddModalState = initialState;
@@ -46,21 +45,14 @@ class AddModal extends React.Component<AddModalProps, AddModalState> {
       [id]: value
     } as Pick<AddModalState, keyof AddModalState>);
   };
-  [handleGeneratePassword] = (): any => {
-    const generatedPassword = generatePassword(20);
-    console.log("Generated password:", generatedPassword);
-    this.setPassword(generatedPassword);
-  };
   [handlePasswordChange] = (event: any): void => {
     const { value } = event.target;
-    this.setPassword(value);
-  };
-
-  setPassword = (value: string): void => {
+    const { password } = this.state;
     this.setState({
       password: value
     } as Pick<AddModalState, keyof AddModalState>);
 
+    console.log(password, !password);
     this.setState({ passStr: scorePassword(value) });
   };
 
@@ -77,12 +69,10 @@ class AddModal extends React.Component<AddModalProps, AddModalState> {
           p_name="Name"
           p_login="Login"
           p_password="Password"
-          passwordValue={password}
           onInputChange={this[handleChange]}
           onPasswordChange={this[handlePasswordChange]}
-          onGeneratePassword={this[handleGeneratePassword]}
           loadingComponent={loading ? <ClipLoader size={15} /> : null}
-          disabled={!name || !login || !password || passStr < 30}
+          disabled={!name || !login || !password}
           progress={passStr}
         />
       </>

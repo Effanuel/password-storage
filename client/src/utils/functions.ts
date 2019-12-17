@@ -15,7 +15,7 @@ export const scorePassword = (pass: string): number => {
   if (!pass) return score;
   console.log("go");
   // award every unique letter until 5 repetitions
-  let letters: any = {};
+  let letters: any = new Object();
   for (let i = 0; i < pass.length; i++) {
     letters[pass[i]] = (letters[pass[i]] || 0) + 1;
     score += 2.0 / letters[pass[i]];
@@ -30,8 +30,8 @@ export const scorePassword = (pass: string): number => {
   };
 
   const weights: any = {
-    digits: 0.7,
-    lower: 0.5,
+    digits: 0.5,
+    lower: 0.3,
     upper: 0.75,
     nonWords: 1
   };
@@ -43,16 +43,6 @@ export const scorePassword = (pass: string): number => {
     }
   }
   score += (variationCount - 1) * 20;
-  const number = parseInt(score.toFixed(1));
-  return number > 100 ? 100 : number;
-};
 
-export const generatePassword = (length: number): string => {
-  const charset =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+=;,./";
-  let retVal: string = "";
-  for (var i = 0, n = charset.length; i < length; ++i) {
-    retVal += charset.charAt(Math.floor(Math.random() * n));
-  }
-  return retVal;
+  return parseInt(score.toFixed(1));
 };
