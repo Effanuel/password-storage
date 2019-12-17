@@ -14,6 +14,7 @@ const initialState = {
   loading: false,
   error: "",
   selectedName: {
+    _id: "",
     name: "",
     login: "",
     password: ""
@@ -27,8 +28,7 @@ export default (state: DatabaseState = initialState, action: Actions): any => {
         ...state,
         loading: false,
         data: action.payload,
-        error: "",
-        responseSuccess: false
+        error: ""
       };
     case DATA_LOADING:
       return { ...state, loading: true, error: "" };

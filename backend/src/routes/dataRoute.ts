@@ -15,19 +15,17 @@ Router.get("/getData", async (req, res) => {
 // this method overwrites existing data in our database
 Router.post("/updateData", async (req, res) => {
   const { filter, update } = req.body.data;
-  console.log(filter, update, "BACKEND");
+  console.log(filter, "BACKEND");
   Data.findOneAndUpdate(filter, update, err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
 });
 
-// this is our delete method
-// this method removes existing data in our database
+// DELETE BY ID
 Router.delete("/deleteData", async (req, res) => {
-  const { name } = req.body;
-  Data.findOneAndRemove({ name: name }, err => {
-    console.log(name);
+  const { _id } = req.body;
+  Data.findOneAndRemove({ _id }, err => {
     if (err) return res.send(err);
     return res.json({ success: true });
   });

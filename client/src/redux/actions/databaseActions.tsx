@@ -1,6 +1,6 @@
 import * as constants from "./actionTypes";
 import axios from "../../utils/axios";
-import { encrypt, decrypt } from "../../utils/algo";
+import { encrypt } from "../../utils/algo";
 
 import { Thunk } from "../models/state";
 import { modalClose } from "./modalActions";
@@ -84,7 +84,7 @@ export const removeData = (payload: any): Thunk => async dispatch => {
     dispatch(dataLoading());
     const response = await axios.delete("/api/deleteData", {
       data: {
-        name: payload
+        _id: payload
       }
     });
     console.log(response);
@@ -96,16 +96,19 @@ export const removeData = (payload: any): Thunk => async dispatch => {
 };
 
 export const updateData = ({
+  _id,
   name,
   login,
   password
 }: any): Thunk => async dispatch => {
   try {
     dispatch(dataLoading());
+    console.log(_id, name, login, password, "STATS");
+    const encrypted_password = await encryptData(password);
     const response = await axios.post("/api/updateData", {
       data: {
-        filter: { name: name },
-        update: { login: login, password: password }
+        filter: { _id: _id },
+        update: { name, login, password: encrypted_password }
       }
     });
     console.log(response);
