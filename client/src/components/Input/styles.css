@@ -1,0 +1,20 @@
+@import "../../css/root.css";
+
+.input {
+  background-color: var(--secondaryColor);
+  border: 1px solid black;
+  border-radius: 0px;
+  color: white;
+}
+
+.input:focus {
+  background-color: var(--secondaryColor);
+  border: 1px solid var(--accentColor);
+  color: white;
+  box-shadow: none;
+}
+
+.input:-moz-ui-invalid {
+  box-shadow: none;
+}
+
