@@ -5,12 +5,12 @@ import modalReducer from "../reducers/modalReducer";
 
 import thunk from "redux-thunk";
 
-// import { AppState } from "../models/state";
+import { AppState } from "../models/state";
 
 const initialState = {};
 const middleware = [thunk];
 
-const rootReducer = combineReducers<any>({
+const rootReducer = combineReducers<AppState>({
   database: databaseReducer,
   modal: modalReducer
 });

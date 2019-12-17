@@ -1,5 +1,7 @@
 import React from "react";
 
+import { MdAdd } from "react-icons/md";
+
 import "./styles.css";
 // COMPONENTS
 import { Form, InputGroup } from "react-bootstrap";
@@ -29,7 +31,9 @@ const SearchBarContainer = ({
           required
         />
         <InputGroup.Prepend onClick={onClick}>
-          <InputGroup.Text className="add-button">Add</InputGroup.Text>
+          <InputGroup.Text className="add-button">
+            <MdAdd size={25} />
+          </InputGroup.Text>
         </InputGroup.Prepend>
       </InputGroup>
     </>
