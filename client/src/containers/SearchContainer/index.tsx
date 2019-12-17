@@ -18,12 +18,12 @@ import {
 
 // COMPONENTS
 import { SearchContainerProps, SearchContainerState } from "../../@types";
-import { SpinnerComponent, Card, Loader } from "../../components";
+import { Card, Loader } from "../../components";
 import { SearchBarContainer } from "../";
 
 // UTIL
 import "./styles.css";
-import { decrypt } from "../../utils/algo";
+import { decrypt } from "../../utils";
 
 // LAZY
 const AddModal = lazy(() => import("../AddModal"));
@@ -31,7 +31,8 @@ const UpdateModal = lazy(() => import("../UpdateModal"));
 
 const initialState = Object.freeze({
   filtered: [],
-  data: []
+  data: [],
+  copied: -1
 });
 
 const handleChange = Symbol();
@@ -40,14 +41,10 @@ const handleRemoveData = Symbol();
 const handleUpdateData = Symbol();
 const handleCopyPassword = Symbol();
 
-class SearchContainer extends React.PureComponent<
-  SearchContainerProps,
-  SearchContainerState
-> {
+class SearchContainer extends React.PureComponent<any, any> {
   readonly state: any = initialState;
 
   componentDidMount() {
-    console.log("MOUN TED");
     this.props.fetchData();
   }
 
@@ -55,7 +52,6 @@ class SearchContainer extends React.PureComponent<
     // console.log(nextProps, "NEXTPROPS");
     // console.log(prevState, "PREVSTATE");
     // console.log("DERIVED", nextProps.items !== prevState.filtered);
-    console.log(nextProps.error, nextProps.loading);
     if (nextProps.data !== prevState.data) {
       console.log("CALL GET DERIVED SETSTATE");
       return { filtered: nextProps.data, data: nextProps.data };
@@ -75,17 +71,19 @@ class SearchContainer extends React.PureComponent<
   [handleAddData] = (): void => {
     this.props.modalOpen("addModal");
   };
-  [handleRemoveData] = (e: any, value: string): void => {
-    console.log(value);
-    this.props.removeData(value);
+  [handleRemoveData] = (e: any, id: any): void => {
+    this.props.removeData(id);
   };
-  [handleUpdateData] = (
+  [handleUpdateData] = async (
     e: any,
+    _id: any,
     name: string,
     login: string,
     password: string
-  ): void => {
-    this.props.selectName({ name: name, login: login, password: password });
+  ): Promise<void> => {
+    const decrypted_password = await decrypt("hello", password);
+    console.log("OPEN UPDATE MODAL", _id);
+    this.props.selectName({ _id, name, login, password: decrypted_password });
     this.props.modalOpen("updateModal");
   };
 
@@ -110,7 +108,11 @@ class SearchContainer extends React.PureComponent<
     });
   };
 
-  [handleCopyPassword] = async (e: any, password: string): Promise<any> => {
+  [handleCopyPassword] = async (
+    e: any,
+    password: string,
+    id: any
+  ): Promise<any> => {
     const textField = document.createElement("textarea");
     // Decrypt password with a phrase
     const decrypted_password = await decrypt("hello", password);
@@ -119,6 +121,11 @@ class SearchContainer extends React.PureComponent<
     textField.select();
     document.execCommand("copy");
     textField.remove();
+    // Copied. message to appear/dissappear
+    this.setState({ copied: id });
+    setTimeout(() => {
+      this.setState({ copied: -1 });
+    }, 350);
   };
 
   render() {
@@ -128,25 +135,32 @@ class SearchContainer extends React.PureComponent<
     return (
       <>
         <div className="search-container">
+          <div style={{ color: "red" }}>{error}</div>
           <Loader loading={loading} height={5} color="#00ca45" />
           <SearchBarContainer
             onChange={this[handleChange]}
             onClick={this[handleAddData]}
             placeholder="Search..."
           />
-          {filtered && filtered.constructor === Array && filtered.length === 0
-            ? "No entries found."
-            : filtered.map((item: any, i: any) => (
-                <Card
-                  key={i}
-                  name={item.name}
-                  login={item.login}
-                  password={item.password}
-                  onClickRemove={this[handleRemoveData]}
-                  onClickUpdate={this[handleUpdateData]}
-                  onClickCopy={this[handleCopyPassword]}
-                />
-              ))}
+          {filtered &&
+          filtered.constructor === Array &&
+          filtered.length === 0 ? (
+            <div style={{ color: "white" }}>No results were found.</div>
+          ) : (
+            filtered.map((item: any, i: any) => (
+              <Card
+                id={item._id}
+                key={i}
+                name={item.name}
+                login={item.login}
+                password={item.password}
+                onClickRemove={this[handleRemoveData]}
+                onClickUpdate={this[handleUpdateData]}
+                onClickCopy={this[handleCopyPassword]}
+                copied={this.state.copied}
+              />
+            ))
+          )}
         </div>
         {showModal === "addModal" && (
           <Suspense fallback={<div>Loading...</div>}>

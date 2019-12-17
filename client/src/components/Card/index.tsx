@@ -1,52 +1,73 @@
 import React from "react";
 
-import { Button } from "react-bootstrap";
-import "./styles.css";
+import { MdDelete, MdEdit } from "react-icons/md";
+
+import styles from "./styles.module.css";
+
+const {
+  container,
+  buttonStyle,
+  deleteStyle,
+  edit,
+  nameLoginContainer,
+  nameStyle,
+  loginStyle,
+  copiedStyle
+} = styles;
 
 interface Props {
+  id: any;
   name: string;
   login: string;
   password: string;
   onClickUpdate: (
     e: any,
+    id: any,
     name: string,
     login: string,
     password: string
   ) => void;
-  onClickRemove: (e: any, name: string) => void;
-  onClickCopy: (e: any, password: string) => void;
+  onClickRemove: (e: any, id: any) => void;
+  onClickCopy: (e: any, password: string, id: any) => void;
+  copied: boolean;
 }
 
 const Card = ({
+  id,
   name,
   login,
   password,
   onClickUpdate,
   onClickRemove,
-  onClickCopy
+  onClickCopy,
+  copied
 }: Props) => {
-  console.log(name, login, password, "card");
-
   return (
-    <div className="container">
+    <div className={container}>
       <span
-        className="name-login-container"
-        onClick={(e: any) => onClickCopy(e, password)}
+        className={nameLoginContainer}
+        id={id}
+        onClick={(e: any) => onClickCopy(e, password, id)}
       >
-        <span className="name-style">{name} </span>
-        <span className="login-style">{login}</span>
+        <span className={nameStyle}>{name} </span>
+        <span className={loginStyle}>{login}</span>
       </span>
-      <div className="button-container">
-        <Button
-          variant="info"
-          id='update'
-          onClick={(e: any) => onClickUpdate(e, name, login, password)}
+      {copied === id && <div className={copiedStyle}>Copied.</div>}
+      <div className={styles["button-container"]}>
+        <div
+          className={buttonStyle}
+          id={edit}
+          onClick={(e: any) => onClickUpdate(e, id, name, login, password)}
         >
-          /
-        </Button>
-        <Button variant="danger" id='remove' onClick={(e: any) => onClickRemove(e, name)}>
-          X
-        </Button>
+          <MdEdit size={25} />
+        </div>
+        <div
+          className={buttonStyle}
+          id={deleteStyle}
+          onClick={(e: any) => onClickRemove(e, id)}
+        >
+          <MdDelete size={25} />
+        </div>
       </div>
     </div>
   );
