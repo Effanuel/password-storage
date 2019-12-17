@@ -4,6 +4,7 @@ export type AddModalState = {
   name: string;
   login: string;
   password: string;
+  passStr: number;
 };
 
 export type AddModalProps = {
@@ -14,14 +15,16 @@ export type AddModalProps = {
 };
 
 export type UpdateModalState = {
-  name: string;
-  login: string;
-  password: string;
+  _id?: any;
+  name?: string;
+  login?: string;
+  password?: string;
 };
+
 export type UpdateModalProps = {
   showModal: null | string;
   loading: boolean;
-  selectedName: object;
+  selectedName: { name: string; login: string; password: string };
   modalOpen: (payload: string) => void;
   modalClose: () => void;
   updateData: (payload: object) => void;
