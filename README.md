@@ -41,7 +41,7 @@ The Backend was built using **Node + Express** and the Frontend, **React + Redux
 1. Clone the repo or [download zip]():
 
 ```sh
-git clone https://github.com/Effanuel/MERN.git
+git clone https://github.com/Effanuel/MERN/archive/v1.0.zip
 cd MERN/backend
 ```
 
@@ -62,7 +62,7 @@ npm run build
 #### TLDR setup:
 
 ```sh
-git clone https://github.com/Effanuel/MERN.git
+git clone https://github.com/Effanuel/MERN/archive/v1.0.zip
 cd MERN/backend
 npm run init:packages
 npm run build
