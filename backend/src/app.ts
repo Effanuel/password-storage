@@ -19,6 +19,8 @@ app.disable("etag").disable("x-powered-by");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use("/api", dataRoute);
+app.use("/user", userRoute);
 
 if (process.env.NODE_ENV != "development ") {
   // Init logger
@@ -32,16 +34,6 @@ if (process.env.NODE_ENV != "development ") {
   });
 }
 
-app.use("/api", dataRoute);
-app.use("/user", userRoute);
-app.use((req, res, next) => {
-  // if (req.method === "GET") {
-  //   res.send("GET DISABLED");
-  // } else {
-  //   next();
-  // }
-  next();
-});
 // const pass = config.pass;
 // const user = config.user;
 // const dbRoute = `mongodb+srv://${user}:${pass}@cluster0-hoja9.mongodb.net/test?retryWrites=true&w=majority`;

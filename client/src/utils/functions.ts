@@ -13,7 +13,6 @@ export const styleProgress = (str: number): any => {
 export const scorePassword = (pass: string): number => {
   let score: number = 0;
   if (!pass) return score;
-  console.log("go");
   // award every unique letter until 5 repetitions
   let letters: any = {};
   for (let i = 0; i < pass.length; i++) {
