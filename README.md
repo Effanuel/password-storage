@@ -1,3 +1,9 @@
+# Password storage
+
+<p align="center"> 
+  <img src='https://github.com/Effanuel/MERN/blob/master/assets/interface.png'>
+</p>
+
 ## Table of Contents
 
 - [Current Features](#current-features)
@@ -8,7 +14,7 @@
 - [Usage](#usage)
 - [Roadmap](#roadmap)
 
-# Password Storage
+## Password Storage using MERN
 
 This is a minimal password storage application.
 
@@ -33,15 +39,14 @@ The Backend was built using **Node + Express** and the Frontend, **React + Redux
 ### Prerequisites
 
 - [Nodejs](https://nodejs.org/en/download/)
-- [Git](https://git-scm.com/downloads) _(for cloning the repository)_
 - [Mongo](https://docs.mongodb.com/manual/installation/)
 
 ### Installation
 
-1. **Clone the repo or [download zip]():**
+1. **Clone the repo or [download zip](https://github.com/Effanuel/MERN/archive/v1.1.zip):**
 
 ```sh
-git clone https://github.com/Effanuel/MERN/archive/v1.0.zip
+git clone https://github.com/Effanuel/MERN/archive/v1.1.zip
 cd MERN/backend
 ```
 
@@ -68,7 +73,7 @@ npm run dev
 #### TLDR setup:
 
 ```sh
-git clone https://github.com/Effanuel/MERN/archive/v1.0.zip
+git clone https://github.com/Effanuel/MERN/archive/v1.1.zip
 cd MERN/backend
 npm run init:packages
 npm run build
@@ -87,4 +92,4 @@ npm run prod
 ## Roadmap
 
 - Proper tests;
-- Fix types;
+- Fix types *(currently around ~150 any types)*;
