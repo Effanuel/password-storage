@@ -1,5 +1,5 @@
 import * as constants from "./actionTypes";
-import axios from "../../utils/axios";
+import axios from "axios";
 import { encrypt } from "../../utils/algo";
 
 import { Thunk } from "../models/state";

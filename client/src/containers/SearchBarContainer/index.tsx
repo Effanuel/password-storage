@@ -7,9 +7,9 @@ import "./styles.css";
 import { Form, InputGroup } from "react-bootstrap";
 
 interface Props {
-  onClick: () => void;
-  onChange: (event: any) => void;
-  placeholder: string;
+  onClick?: () => void;
+  onChange?: (event: any) => void;
+  placeholder?: string;
   value?: any;
 }
 

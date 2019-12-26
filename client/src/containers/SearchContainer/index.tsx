@@ -53,7 +53,6 @@ class SearchContainer extends React.PureComponent<any, any> {
     // console.log(prevState, "PREVSTATE");
     // console.log("DERIVED", nextProps.items !== prevState.filtered);
     if (nextProps.data !== prevState.data) {
-      console.log("CALL GET DERIVED SETSTATE");
       return { filtered: nextProps.data, data: nextProps.data };
     } else return null;
   }
