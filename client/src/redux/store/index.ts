@@ -15,10 +15,7 @@ const rootReducer = combineReducers<AppState>({
   modal: modalReducer
 });
 
-const store = createStore(
-  rootReducer,
-  initialState,
-  applyMiddleware(...middleware)
-);
+const store = (state: any = initialState) =>
+  createStore(rootReducer, state, applyMiddleware(...middleware));
 
 export { store };
