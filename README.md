@@ -22,6 +22,7 @@ This is a minimal password storage application.
 
 - Keep your passwords safe with a help of an encrypting algorithm;
 - Built with **TypeScript** *(yes, its a feature these days)*;
+- Clicking on one of the cards will copy the password to the clipboard;
 
 ### Built With
 
