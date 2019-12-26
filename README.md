@@ -19,7 +19,7 @@ This is a minimal password storage application.
 
 ### Built With
 
-The Backend was built using **Node + Express** and the Frontend, **React + Redux**. Styled components were taken from **React Bootstrap**. Database is managed with a help of **Mongoose**
+The Backend was built using **Node + Express** and the Frontend, **React + Redux**. Styled components were taken from **React Bootstrap**. Mongo database is managed with a help of **Mongoose**
 
 - [Node](https://nodejs.org/en/) + [Express](https://expressjs.com/)
 - [React](https://reactjs.org/) + [Redux](https://redux.js.org/)
@@ -38,26 +38,32 @@ The Backend was built using **Node + Express** and the Frontend, **React + Redux
 
 ### Installation
 
-1. Clone the repo or [download zip]():
+1. **Clone the repo or [download zip]():**
 
 ```sh
 git clone https://github.com/Effanuel/MERN/archive/v1.0.zip
 cd MERN/backend
 ```
 
-2. Install NPM packages for client and server:
+2. **Install NPM packages for client and server:**
 
 ```sh
 npm run init:packages
 ```
 
-3. Build the application:
+3. **Build the application:**
 
 ```sh
 npm run build
 ```
 
 <!-- USAGE EXAMPLES -->
+
+4. **To start development mode:**
+
+```sh
+npm run dev
+```
 
 #### TLDR setup:
 
