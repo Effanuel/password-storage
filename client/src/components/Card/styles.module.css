@@ -53,14 +53,15 @@
   display: inline-block;
   vertical-align: middle;
   flex: 3;
-  padding-left: 10px;
+  padding-left: 5px;
+  margin-left: 5px;
   /* background-color: green; */
 }
 
 .nameStyle {
   font-weight: bold;
   color: var(--accentColor);
-  text-shadow: 1px 1px black;
+  /* text-shadow: 1px 1px black; */
 }
 .loginStyle {
   color: white;
