@@ -4,17 +4,17 @@ import { Provider } from "react-redux";
 import axios from "axios";
 import { store } from "../redux/store";
 
-import { SearchContainer } from "../containers";
+import { SearchContainer, SearchBarContainer } from "../containers";
 import { Card, Loader } from "../components";
 
 jest.mock("axios");
 const flushAllPromises = () => new Promise(resolve => setTimeout(resolve, 0));
-const render = () =>
-  mount(
-    <Provider store={store()}>
-      <SearchContainer />
-    </Provider>
-  );
+const onSearchMock = jest.fn();
+const component = mount(
+  <Provider store={store()}>
+    <SearchContainer onChange={onSearchMock} />
+  </Provider>
+);
 
 const cards = {
   data: {
@@ -43,18 +43,31 @@ const cards = {
 
 test("should render loading followed by cards", async () => {
   axios.get.mockReturnValue(new Promise(resolve => resolve(cards)));
-  const component = render();
-
+  // Check loading
   expect(component.find(Loader).prop("loading")).toBe(true);
   expect(component.find(Card).exists()).toBe(false);
 
   await flushAllPromises();
   component.update();
-
+  // Check if its not loading and cards are rendered
   expect(component.find(Loader).prop("loading")).toBe(false);
   component.find(Card).forEach((node, i) => {
     expect(node.prop("name")).toBe(cards.data.data[i].name);
   });
 
-  // expect(2).toBe(2);
+  // const event = {
+  //   target: { value: "0000000000000000000000" }
+  // };
+  // const input = component.find(SearchBarContainer);
+  // // input.simulate("change", event);
+  // component.instance().setState({ copied: 2 });
+  // component.update();
+  // expect(input.props.placeholder).toEqual("Search...");
+  // // component.find(SearchContainer).setState({ filtered: [{ name: "OK" }] });
+  // // expect(input.props().placeholder).toBe("Search...");
+  // expect(component.find(Card).exists()).toBe(false);
+  // // expect(component.state().filtered).toEqual(["Email"]);
+
+  // // expect(component.find(SearchBarContainer).simulate("change", event));
+  // // expect(onSearchMock).toBeCalledWith("email");
 });

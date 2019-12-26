@@ -1,13 +1,9 @@
-import React from "react";
-import { shallow } from "enzyme";
 import { generatePassword, scorePassword } from "../utils";
 
-describe("Generates password", () => {
-  it("strong password", () => {
-    const generated_password = generatePassword(15);
-    const password_score = scorePassword(generated_password);
-    expect(password_score).toBeGreaterThan(40);
-  });
+test("Generates strong password", () => {
+  const generated_password = generatePassword(15);
+  const password_score = scorePassword(generated_password);
+  expect(password_score).toBeGreaterThan(40);
 });
 
 // describe("Encodes/decodes password", () => {
