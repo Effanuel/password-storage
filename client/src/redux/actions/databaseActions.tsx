@@ -52,7 +52,6 @@ export const fetchData = (payload?: any): Thunk => async dispatch => {
     const { data } = response;
     dispatch(fetchDataSuccess(data));
   } catch (err) {
-    console.log("FETCHDATAERROR", err);
     dispatch(fetchDataError(err));
   }
 };
@@ -74,7 +73,6 @@ export const addData = (payload: any): Thunk => async dispatch => {
     dispatch(modalClose());
     dispatch(fetchData());
   } catch (err) {
-    console.log("FETCHDATAERROR", err);
     dispatch(fetchDataError(err));
   }
 };
