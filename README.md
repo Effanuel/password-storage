@@ -44,7 +44,7 @@ The Backend was built using **Node + Express** and the Frontend, **React + Redux
 
 ### Installation
 
-1. **Clone the repo or [download zip](https://github.com/Effanuel/MERN/archive/v1.2.zip):**
+1. **Clone the repo or [download zip](https://github.com/Effanuel/MERN/archive/v1.3.zip):**
 
 ```sh
 git clone https://github.com/Effanuel/MERN.git
