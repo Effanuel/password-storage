@@ -11,15 +11,11 @@ interface ModalClose {
 
 export type Actions = ModalOpen | ModalClose;
 
-export const modalOpen = (payload: any): any => {
-  return {
-    type: constants.MODAL_OPEN,
-    payload: payload
-  };
-};
+export const modalOpen = (payload: any): any => ({
+  type: constants.MODAL_OPEN,
+  payload: payload
+});
 
-export const modalClose = (): any => {
-  return {
-    type: constants.MODAL_CLOSE
-  };
-};
+export const modalClose = (): any => ({
+  type: constants.MODAL_CLOSE
+});

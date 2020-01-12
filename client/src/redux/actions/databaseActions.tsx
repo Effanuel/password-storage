@@ -117,44 +117,30 @@ export const updateData = ({
   }
 };
 
-export const selectName = (payload: any): any => {
-  return {
-    type: constants.SELECT_NAME,
-    payload: payload
-  };
-};
+export const selectName = (payload: any): any => ({
+  type: constants.SELECT_NAME,
+  payload: payload
+});
 
-function dataLoading(payload?: any): any {
-  return {
-    type: constants.DATA_LOADING
-  };
-}
+const dataLoading = (payload?: any): any => ({
+  type: constants.DATA_LOADING
+});
+const fetchDataSuccess = (payload: any): any => ({
+  type: constants.FETCH_DATA_SUCCESS,
+  payload: payload.data
+});
 
-function fetchDataSuccess(payload: any): any {
-  console.log("SUCCESS pay.data", payload.data);
-  return {
-    type: constants.FETCH_DATA_SUCCESS,
-    payload: payload.data
-  };
-}
+// const addDataSuccess = (payload: any): any => ({
+//   type: constants.ADD_DATA_SUCCESS,
+//   payload: payload.success
+// });
 
-function addDataSuccess(payload: any): any {
-  return {
-    type: constants.ADD_DATA_SUCCESS,
-    payload: payload.success
-  };
-}
+const removeDataSuccess = (payload?: any): any => ({
+  type: constants.ADD_DATA_SUCCESS,
+  payload: payload
+});
 
-function removeDataSuccess(payload?: any): any {
-  return {
-    type: constants.ADD_DATA_SUCCESS,
-    payload: payload
-  };
-}
-
-function fetchDataError(payload: any): any {
-  return {
-    type: constants.FETCH_DATA_ERROR,
-    payload: payload.error
-  };
-}
+const fetchDataError = (payload: any): any => ({
+  type: constants.FETCH_DATA_ERROR,
+  payload: payload.error
+});

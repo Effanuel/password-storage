@@ -2,7 +2,6 @@ import {
   FETCH_DATA_ERROR,
   DATA_LOADING,
   FETCH_DATA_SUCCESS,
-  ADD_DATA_SUCCESS,
   SELECT_NAME
 } from "../actions/actionTypes";
 
@@ -34,8 +33,6 @@ export default (state: DatabaseState = initialState, action: Actions): any => {
       return { ...state, loading: true, error: "" };
     case FETCH_DATA_ERROR:
       return { ...state, loading: false, error: action.payload };
-    case ADD_DATA_SUCCESS:
-      return { ...state, loading: false, error: "" };
     case SELECT_NAME:
       return {
         ...state,

@@ -13,28 +13,27 @@ export const styleProgress = (str: number): any => {
 export const scorePassword = (pass: string): number => {
   let score: number = 0;
   if (!pass) return score;
-  // award every unique letter until 5 repetitions
   let letters: any = {};
+  // Points for length and variation
   for (let i = 0; i < pass.length; i++) {
     letters[pass[i]] = (letters[pass[i]] || 0) + 1;
     score += 2.0 / letters[pass[i]];
   }
-
-  // bonus points for mixing it up
+  // Bonus for variation
   const variations: any = {
     digits: /\d/.test(pass),
     lower: /[a-z]/.test(pass),
     upper: /[A-Z]/.test(pass),
     nonWords: /\W/.test(pass)
   };
-
+  // Variation weights
   const weights: any = {
     digits: 0.7,
     lower: 0.5,
     upper: 0.75,
     nonWords: 1
   };
-
+  // Applying variation points
   let variationCount: number = 0;
   for (let check in variations) {
     if (variations[check]) {
@@ -42,7 +41,6 @@ export const scorePassword = (pass: string): number => {
     }
   }
   score += (variationCount - 1) * 20;
-
   const number = parseInt(score.toFixed(1));
   return number > 100 ? 100 : number;
 };

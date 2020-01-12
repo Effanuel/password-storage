@@ -21,32 +21,22 @@ export const signup = (payload: any): Thunk => async dispatch => {
   }
 };
 
-const loading = (payload?: any): any => {
-  return {
-    type: constants.LOADING
-  };
-};
+const loading = (payload?: any): any => ({
+  type: constants.LOADING
+});
 
-const loginSuccess = (payload?: any): any => {
-  return {
-    type: constants.LOGIN_SUCCESS
-  };
-};
+const loginSuccess = (payload?: any): any => ({
+  type: constants.LOGIN_SUCCESS
+});
 
-const loginError = (payload?: any): any => {
-  return {
-    type: constants.LOGIN_ERROR
-  };
-};
+const loginError = (payload?: any): any => ({
+  type: constants.LOGIN_ERROR
+});
 
-const signupSuccess = (payload?: any): any => {
-  return {
-    type: constants.SIGNUP_SUCCESS
-  };
-};
+const signupSuccess = (payload?: any): any => ({
+  type: constants.SIGNUP_SUCCESS
+});
 
-const signupError = (payload?: any): any => {
-  return {
-    type: constants.SIGNUP_ERROR
-  };
-};
+const signupError = (payload?: any): any => ({
+  type: constants.SIGNUP_ERROR
+});
