@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // REDUX
-import { connect } from "react-redux";
+import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import { modalClose } from "../../redux/actions/modalActions";
 import { addData } from "../../redux/actions/databaseActions";
 import {
@@ -23,86 +23,72 @@ const initialState = Object.freeze({
   passStr: 0
 });
 
-const handleSave = Symbol();
-const handleClose = Symbol();
-const handleChange = Symbol();
-const handlePasswordChange = Symbol();
-const handleGeneratePassword = Symbol();
+export default function AddModal() {
+  const dispatch = useDispatch();
+  const [state, setState] = useState<AddModalState>(initialState);
 
-class AddModal extends React.Component<any, any> {
-  readonly state: AddModalState = initialState;
+  const { showModal, loading } = useSelector(
+    (state: any): AddModalProps => ({
+      showModal: modalShowModalSelector(state),
+      loading: databaseLoadingSelector(state)
+    }),
+    shallowEqual
+  );
 
-  [handleSave] = (): void => {
-    this.props.addData(this.state);
-  };
-
-  [handleClose] = (): void => {
-    this.props.modalClose();
-    this.setState(initialState);
-  };
-  [handleChange] = (event: any): any => {
-    const { id, value } = event.target;
-    this.setState({
-      [id]: value
-    } as Pick<AddModalState, keyof AddModalState>);
-  };
-  [handlePasswordChange] = (event: any): void => {
-    const { value } = event.target;
-    const { password } = this.state;
-    this.setState({
-      password: value
-    } as Pick<AddModalState, keyof AddModalState>);
-
-    console.log(password, !password);
-    this.setState({ passStr: scorePassword(value) });
-  };
-
-  setPassword = (value: string): void => {
-    this.setState({
-      password: value
-    } as Pick<AddModalState, keyof AddModalState>);
-
-    this.setState({ passStr: scorePassword(value) });
-  };
-
-  [handleGeneratePassword] = (): any => {
-    const generatedPassword = generatePassword(20);
-    console.log("Generated password:", generatedPassword);
-    this.setPassword(generatedPassword);
-  };
-
-  render() {
-    const { showModal, loading } = this.props;
-    const { name, login, password, passStr } = this.state;
-    return (
-      <>
-        <ModalComponent
-          title="Add entry"
-          show={showModal === "addModal" || false}
-          onSave={this[handleSave]}
-          onClose={this[handleClose]}
-          p_name="Name"
-          p_login="Login"
-          p_password="Password"
-          passwordValue={password}
-          onInputChange={this[handleChange]}
-          onPasswordChange={this[handlePasswordChange]}
-          onGeneratePassword={this[handleGeneratePassword]}
-          loadingComponent={loading ? <ClipLoader size={15} /> : null}
-          disabled={!name || !login || !password || passStr < 30}
-          progress={passStr}
-        />
-      </>
-    );
+  function handleSave(): void {
+    dispatch(addData(state));
   }
+
+  function handleClose(): void {
+    dispatch(modalClose());
+    setState(prevState => ({ ...prevState, initialState }));
+  }
+  function handleChange(event: any): any {
+    const { id, value } = event.target;
+    setState(prevState => ({ ...prevState, [id]: value }));
+  }
+  function handlePasswordChange(event: any): void {
+    const { value } = event.target;
+    setState(prevState => ({
+      ...prevState,
+      password: value,
+      passStr: scorePassword(value)
+    }));
+  }
+
+  function setPassword(value: string): void {
+    setState(prevState => ({
+      ...prevState,
+      password: value,
+      passStr: scorePassword(value)
+    }));
+  }
+
+  function handleGeneratePassword(): any {
+    const generatedPassword = generatePassword(20);
+    setPassword(generatedPassword);
+  }
+
+  return (
+    <>
+      <ModalComponent
+        title="Add entry"
+        show={showModal === "addModal" || false}
+        onSave={handleSave}
+        onClose={handleClose}
+        p_name="Name"
+        p_login="Login"
+        p_password="Password"
+        passwordValue={state.password}
+        onInputChange={handleChange}
+        onPasswordChange={handlePasswordChange}
+        onGeneratePassword={handleGeneratePassword}
+        loadingComponent={loading ? <ClipLoader size={15} /> : null}
+        disabled={
+          !state.name || !state.login || !state.password || state.passStr < 30
+        }
+        progress={state.passStr}
+      />
+    </>
+  );
 }
-
-const mapStateToProps = (state: any) => ({
-  showModal: modalShowModalSelector(state),
-  loading: databaseLoadingSelector(state)
-});
-
-export default connect(mapStateToProps, {
-  modalClose,
-  addData
-})(AddModal);

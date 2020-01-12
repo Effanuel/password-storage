@@ -1,10 +1,7 @@
-import React from "react";
-
-import { generatePassword, scorePassword } from "../../utils";
-
+import React, { useEffect, useState } from "react";
 // REDUX
-import { connect } from "react-redux";
-import { modalOpen, modalClose } from "../../redux/actions/modalActions";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { modalClose } from "../../redux/actions/modalActions";
 import { updateData } from "../../redux/actions/databaseActions";
 import {
   modalShowModalSelector,
@@ -14,121 +11,113 @@ import {
 // COMPONENTS
 import { ModalComponent } from "../../components";
 import { ClipLoader } from "react-spinners";
-
+// UTILS
 import { UpdateModalProps, UpdateModalState } from "../../@types";
-
+import { generatePassword, scorePassword } from "../../utils";
+// INIT STATE
 const initialState = Object.freeze({
   _id: "",
   name: "",
   login: "",
   password: "",
-  passStr: ""
+  passStr: 0
 });
 
-const handleSave = Symbol();
-const handleClose = Symbol();
-const handleChange = Symbol();
-const handleGeneratePassword = Symbol();
-const handlePasswordChange = Symbol();
+export default function UpdateModal() {
+  const [state, setState] = useState<UpdateModalState>(initialState);
 
-class UpdateModal extends React.Component<any, any> {
-  readonly state: any = initialState;
+  // --- REDUX ---
+  const dispatch = useDispatch();
+  const { showModal, loading, selectedName } = useSelector(
+    (state: any): UpdateModalProps => ({
+      showModal: modalShowModalSelector(state),
+      loading: databaseLoadingSelector(state),
+      selectedName: databaseSelectedNameSelector(state)
+    }),
+    shallowEqual
+  );
+  // --- --- ---
 
-  componentDidMount() {
-    const { name, login, password } = this.props.selectedName;
-    this.setState({ name, login });
-    this.setPassword(password);
-  }
+  useEffect(() => {
+    const { _id, name, login, password } = selectedName;
+    setState(prevState => ({
+      ...prevState,
+      _id,
+      name,
+      login
+    }));
+    setPassword(password);
+  }, [selectedName]);
 
-  // static getDerivedStateFromProps(nextProps: any, prevState: any): any {
-  //   // console.log(nextProps, "NEXTPROPS");
-  //   // console.log(prevState, "PREVSTATE");
-  //   // console.log("DERIVED", nextProps.items !== prevState.filtered);
-  //   console.log(prevState, "derived");
-  //   if (prevState) {
-  //     return nextProps.selectedName;
-  //   } else return null;
-  // }
-
-  // componentDidUpdate(prevProps: any, prevState: any) {
-  //   console.log("DID", prevState);
-  // }
-
-  [handleSave] = async (): Promise<void> => {
+  // Handles saving update data
+  const handleSave = async (): Promise<void> => {
     //Handle no input change
-    let key: string;
-    for (key in this.state) {
-      if ((this.state as any)[key] == "") {
-        await this.setState({
-          [key]: (this.props.selectedName as any)[key]
-        });
+    for (let key in Object.keys(state)) {
+      if ((state as any)[key] === "") {
+        await setState(prevState => ({
+          ...prevState,
+          [key]: (selectedName as any)[key]
+        }));
       }
     }
-    this.props.updateData(this.state);
+    dispatch(updateData(state));
   };
 
-  [handleClose] = (): void => {
-    this.props.modalClose();
-    this.setState(initialState);
-  };
+  // Handles closing modal
+  function handleClose(): void {
+    dispatch(modalClose());
+    // setState(prevState => ({
+    //   ...prevState,
+    //   initialState
+    // }));
+  }
 
-  [handleChange] = (event: any): void => {
+  // Handles input change
+  function handleChange(event: any): void {
     const { id, value } = event.target;
-    this.setState({
+    setState(prevState => ({
+      ...prevState,
       [id]: value
-    } as Pick<UpdateModalState, keyof UpdateModalState>);
-  };
-  [handlePasswordChange] = (event: any): void => {
-    const { value } = event.target;
-    this.setPassword(value);
-  };
+    }));
+  }
 
-  [handleGeneratePassword] = (): void => {
+  function handlePasswordChange(event: any): void {
+    const { value } = event.target;
+    setPassword(value);
+  }
+
+  function handleGeneratePassword(): void {
     const generatedPassword = generatePassword(20);
     console.log("Generated password:", generatedPassword);
-    this.setPassword(generatedPassword);
-  };
+    setPassword(generatedPassword);
+  }
 
-  setPassword = (value: string): void => {
-    this.setState({
+  // Fills password input
+  function setPassword(value: string): void {
+    setState(prevState => ({
+      ...prevState,
       password: value,
       passStr: scorePassword(value)
-    });
-  };
-
-  render() {
-    const { showModal, loading, selectedName } = this.props;
-    const { password, passStr } = this.state;
-    return (
-      <>
-        <ModalComponent
-          title="Update"
-          show={showModal === "updateModal" || false}
-          onSave={this[handleSave]}
-          onClose={this[handleClose]}
-          p_name={selectedName.name}
-          p_login={selectedName.login}
-          p_password={selectedName.password}
-          passwordValue={password}
-          onPasswordChange={this[handlePasswordChange]}
-          onGeneratePassword={this[handleGeneratePassword]}
-          onInputChange={this[handleChange]}
-          loadingComponent={loading ? <ClipLoader size={15} /> : null}
-          progress={passStr}
-        />
-      </>
-    );
+    }));
   }
+
+  return (
+    <>
+      <ModalComponent
+        title="Update"
+        show={showModal === "updateModal" || false}
+        onSave={handleSave}
+        onClose={handleClose}
+        p_name={selectedName.name}
+        p_login={selectedName.login}
+        p_password={selectedName.password}
+        passwordValue={state.password}
+        onPasswordChange={handlePasswordChange}
+        onGeneratePassword={handleGeneratePassword}
+        onInputChange={handleChange}
+        loadingComponent={loading ? <ClipLoader size={15} /> : null}
+        progress={state.passStr}
+      />
+    </>
+  );
 }
-
-const mapStateToProps = (state: any) => ({
-  showModal: modalShowModalSelector(state),
-  loading: databaseLoadingSelector(state),
-  selectedName: databaseSelectedNameSelector(state)
-});
-
-export default connect(mapStateToProps, {
-  modalOpen,
-  modalClose,
-  updateData
-})(UpdateModal);

@@ -10,8 +10,8 @@ export type AddModalState = {
 export type AddModalProps = {
   showModal: null | string;
   loading: boolean;
-  modalClose: () => void;
-  addData: (payload: AddModalState) => void;
+  modalClose?: () => void;
+  addData?: (payload: AddModalState) => void;
 };
 
 export type UpdateModalState = {
@@ -19,19 +19,21 @@ export type UpdateModalState = {
   name: string;
   login: string;
   password: string;
+  passStr: number;
 };
 export type UpdateModalProps = {
   showModal: null | string;
   loading: boolean;
   selectedName: any;
-  modalOpen: (payload: string) => void;
-  modalClose: () => void;
-  updateData: (payload: object) => void;
+  modalOpen?: (payload: string) => void;
+  modalClose?: () => void;
+  updateData?: (payload: object) => void;
 };
 
 export type SearchContainerState = {
   filtered: any;
   data: any;
+  copied: any;
 };
 
 export type SearchContainerProps = {
@@ -39,8 +41,8 @@ export type SearchContainerProps = {
   loading: boolean;
   error: string;
   showModal: any;
-  fetchData: () => void;
-  removeData: (payload: string) => void;
-  modalOpen: (payload: string) => void;
-  selectName: (payload: object) => void;
+  fetchData?: () => void;
+  removeData?: (payload: string) => void;
+  modalOpen?: (payload: string) => void;
+  selectName?: (payload: object) => void;
 };

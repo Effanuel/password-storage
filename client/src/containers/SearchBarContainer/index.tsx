@@ -1,10 +1,9 @@
 import React from "react";
-
-import { MdAdd } from "react-icons/md";
-
-import "./styles.css";
 // COMPONENTS
 import { Form, InputGroup } from "react-bootstrap";
+// UTILS
+import { MdAdd } from "react-icons/md";
+import "./styles.css";
 
 interface Props {
   onClick?: () => void;
