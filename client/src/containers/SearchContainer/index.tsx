@@ -52,7 +52,6 @@ export default function SearchContainer(props: any) {
   //componentDidMount
   useEffect(() => {
     dispatch(fetchData());
-    console.log(props);
   }, []);
 
   //PropsDidUpdate
