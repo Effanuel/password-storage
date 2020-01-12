@@ -1,5 +1,6 @@
 import express from "express";
 import { Data } from "../models";
+import { logger } from "../util/logger";
 import { auth } from "../middleware/auth";
 const Router = express.Router();
 // this is our get method
@@ -7,6 +8,7 @@ const Router = express.Router();
 Router.get("/getData", async (req, res) => {
   Data.find((err, data) => {
     if (err) return res.json({ success: false, error: err });
+    logger.info("GET DATA success.");
     return res.json({ success: true, data: data });
   });
 });
@@ -15,9 +17,9 @@ Router.get("/getData", async (req, res) => {
 // this method overwrites existing data in our database
 Router.post("/updateData", async (req, res) => {
   const { filter, update } = req.body.data;
-  console.log(filter, "BACKEND");
   Data.findOneAndUpdate(filter, update, err => {
     if (err) return res.json({ success: false, error: err });
+    logger.info("UPDATE DATA success.");
     return res.json({ success: true });
   });
 });
@@ -27,6 +29,7 @@ Router.delete("/deleteData", async (req, res) => {
   const { _id } = req.body;
   Data.findOneAndRemove({ _id }, err => {
     if (err) return res.send(err);
+    logger.info("DELETE DATA success.");
     return res.json({ success: true });
   });
 });
@@ -45,6 +48,8 @@ Router.post("/putData", async (req, res) => {
   let data: any = new Data(req.body);
   data.save((err: any) => {
     if (err) return res.json({ success: false, error: err });
+    logger.info("ADD DATA success.");
+
     return res.json({ success: true });
   });
 });

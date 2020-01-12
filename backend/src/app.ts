@@ -52,7 +52,7 @@ mongoose.connect(
 );
 
 let db = mongoose.connection;
-db.once("open", () => console.log("connected to the database"));
+db.once("open", () => logger.info("Connected to the database."));
 
 // checks if connection with the database is successful
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -105,7 +105,6 @@ app.use((err: any, req: any, res: any, next: any) => {
 // Start server
 app.listen(port, function() {
   logger.info("Example app listening on port " + port);
-  logger.debug("More detailed log", { port });
 });
 // ============LOGGING============
 
