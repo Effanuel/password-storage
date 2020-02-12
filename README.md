@@ -22,7 +22,7 @@ This is a minimal password storage application.
 
 - Keep your passwords safe with a help of an encrypting algorithm;
 - Built with **TypeScript** *(yes, its a feature these days)*;
-- Clicking on one of the cards will copy the password to the clipboard;
+- Clicking on one of the cards will copy the password to the clipboard; *(doesn't work with Firefox)*
 
 ### Built With
 
@@ -44,7 +44,7 @@ The Backend was built using **Node + Express** and the Frontend, **React + Redux
 
 ### Installation
 
-1. **Clone the repo or [download zip](https://github.com/Effanuel/MERN/archive/v1.3.zip):**
+1. **Clone the repo or [download zip](https://github.com/Effanuel/MERN/archive/v2.0.zip):**
 
 ```sh
 git clone https://github.com/Effanuel/MERN.git
@@ -89,8 +89,3 @@ npm run prod
 cd MERN/backend
 npm run prod
 ```
-
-## Roadmap
-
-- Proper tests;
-- Fix types *(currently around ~150 any types)*;
