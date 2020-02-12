@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 // REDUX
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
-import { modalClose } from "../../redux/actions/modalActions";
-import { updateData } from "../../redux/actions/databaseActions";
+import { modalClose } from "../../redux/modules/modal";
+import { updateData } from "../../redux/modules/database";
 import {
   modalShowModalSelector,
   databaseLoadingSelector,

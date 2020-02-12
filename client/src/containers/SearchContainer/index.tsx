@@ -6,8 +6,8 @@ import {
   fetchData,
   removeData,
   selectName
-} from "../../redux/actions/databaseActions";
-import { modalOpen } from "../../redux/actions/modalActions";
+} from "../../redux/modules/database";
+import { modalOpen } from "../../redux/modules/modal";
 import {
   databaseDataSelector,
   databaseLoadingSelector,
@@ -34,7 +34,7 @@ const initialState = Object.freeze({
   copied: -1
 });
 
-export default function SearchContainer(props: any) {
+export default function SearchContainer() {
   const [state, setState] = useState<SearchContainerState>(initialState);
   // --- REDUX ---
   const dispatch = useDispatch();
@@ -65,15 +65,14 @@ export default function SearchContainer(props: any) {
     }
   }, [data]);
 
-  function handleAddData(): any {
+  function handleAddData(): void {
     dispatch(modalOpen("addModal"));
   }
-  function handleRemoveData(e: any, id: any): void {
+  function handleRemoveData(id: string | undefined): void {
     dispatch(removeData(id));
   }
   async function handleUpdateData(
-    e: any,
-    _id: any,
+    _id: string | undefined,
     name: string,
     login: string,
     password: string
@@ -106,10 +105,9 @@ export default function SearchContainer(props: any) {
   }
 
   async function handleCopyPassword(
-    e: any,
     password: string,
-    id: any
-  ): Promise<any> {
+    id: string | undefined
+  ): Promise<void> {
     const textField = document.createElement("textarea");
     // Decrypt password with a phrase
     const decrypted_password = await decrypt("hello", password);
@@ -146,7 +144,7 @@ export default function SearchContainer(props: any) {
         state.filtered.length === 0 ? (
           <div style={{ color: "white" }}>No results were found.</div>
         ) : (
-          state.filtered.map((item: any, i: any) => (
+          state.filtered.map((item: any, i: number) => (
             <Card
               id={item._id}
               key={i}

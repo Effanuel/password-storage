@@ -1,4 +1,6 @@
-export const styleProgress = (str: number): any => {
+export const styleProgress = (
+  str: number
+): "danger" | "warning" | "info" | "success" => {
   if (str < 30) {
     return "danger";
   } else if (str < 60) {

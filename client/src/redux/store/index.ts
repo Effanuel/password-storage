@@ -1,7 +1,6 @@
 import { combineReducers, createStore, applyMiddleware, compose } from "redux";
-import databaseReducer from "../reducers/databaseReducer";
-import modalReducer from "../reducers/modalReducer";
-// import websocketReducer from "../reducers/websocketReducer";
+import { DatabaseReducer } from "../modules/database";
+import { ModalReducer } from "../modules/modal";
 
 import thunk from "redux-thunk";
 
@@ -14,8 +13,8 @@ const composeEnhancers =
   (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 const rootReducer = combineReducers<AppState>({
-  database: databaseReducer,
-  modal: modalReducer
+  database: DatabaseReducer,
+  modal: ModalReducer
 });
 
 const store = (state: any = initialState) =>

@@ -17,3 +17,11 @@
 .input:-moz-ui-invalid {
   box-shadow: none;
 }
+
+.input::selection {
+  background: var(--accentColor); /* WebKit/Blink Browsers */
+}
+
+input::-moz-selection {
+  background: var(--accentColor); /* Gecko Browsers */
+}

@@ -14,11 +14,11 @@ export const databaseDataSelector = createSelector(
 );
 export const databaseLoadingSelector = createSelector(
   [getLoading],
-  (loading: any) => loading
+  (loading: boolean) => loading
 );
 export const databaseErrorSelector = createSelector(
   [getError],
-  (error: any) => error
+  (error: string) => error
 );
 
 export const databaseSelectedNameSelector = createSelector(

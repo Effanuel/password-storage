@@ -3,10 +3,22 @@ import { BarLoader } from "react-spinners";
 
 import styles from "./styles.module.css";
 
-const Loader = ({ loading, height, width, ...other }: any) => {
+type Props = {
+  loading: boolean;
+  height: any;
+  width?: any;
+  color?: string;
+};
+
+const Loader = ({ loading, height, width = "1vw", color }: Props) => {
   return (
-    <div className={styles["loader-main"]}>
-      <BarLoader loading={loading} height={height} width={"1vw"} {...other} />
+    <div className={styles.loader_main}>
+      <BarLoader
+        loading={loading}
+        height={height}
+        width={width}
+        color={color}
+      />
     </div>
   );
 };

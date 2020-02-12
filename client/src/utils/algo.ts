@@ -50,7 +50,7 @@ function buf2hex(buffer: ArrayBuffer): string {
 const deriveKey = async (
   passphrase: string,
   salt1?: Uint8Array
-): Promise<any> => {
+): Promise<[CryptoKey, any]> => {
   const salt = salt1 || crypto.getRandomValues(new Uint8Array(8));
   const key = await crypto.subtle.importKey(
     "raw",

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // REDUX
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import { modalClose } from "../../redux/actions/modalActions";
-import { addData } from "../../redux/actions/databaseActions";
+import { modalClose } from "../../redux/modules/modal";
+import { addData } from "../../redux/modules/database";
 import {
   modalShowModalSelector,
   databaseLoadingSelector
@@ -43,7 +43,7 @@ export default function AddModal() {
     dispatch(modalClose());
     setState(prevState => ({ ...prevState, initialState }));
   }
-  function handleChange(event: any): any {
+  function handleChange(event: any): void {
     const { id, value } = event.target;
     setState(prevState => ({ ...prevState, [id]: value }));
   }
@@ -64,7 +64,7 @@ export default function AddModal() {
     }));
   }
 
-  function handleGeneratePassword(): any {
+  function handleGeneratePassword(): void {
     const generatedPassword = generatePassword(20);
     setPassword(generatedPassword);
   }

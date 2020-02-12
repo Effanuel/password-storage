@@ -6,10 +6,10 @@ import { MdAdd } from "react-icons/md";
 import "./styles.css";
 
 interface Props {
-  onClick?: () => void;
-  onChange?: (event: any) => void;
-  placeholder?: string;
-  value?: any;
+  onClick: () => void;
+  onChange: (event: any) => void;
+  placeholder: string;
+  value?: string;
 }
 
 const SearchBarContainer = ({
@@ -19,23 +19,21 @@ const SearchBarContainer = ({
   value
 }: Props) => {
   return (
-    <>
-      <InputGroup style={{ paddingBottom: "5px" }}>
-        <Form.Control
-          type="text"
-          className="input"
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          required
-        />
-        <InputGroup.Prepend onClick={onClick}>
-          <InputGroup.Text className="add-button">
-            <MdAdd size={25} />
-          </InputGroup.Text>
-        </InputGroup.Prepend>
-      </InputGroup>
-    </>
+    <InputGroup style={{ paddingBottom: "5px" }}>
+      <Form.Control
+        type="text"
+        className="input"
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        required
+      />
+      <InputGroup.Prepend onClick={onClick}>
+        <InputGroup.Text className="add-button">
+          <MdAdd size={25} />
+        </InputGroup.Text>
+      </InputGroup.Prepend>
+    </InputGroup>
   );
 };
 

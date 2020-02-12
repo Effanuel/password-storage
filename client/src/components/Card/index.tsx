@@ -16,20 +16,19 @@ const {
 } = styles;
 
 interface Props {
-  id: any;
+  id: string | undefined;
   name: string;
   login: string;
   password: string;
   onClickUpdate: (
-    e: any,
-    id: any,
+    id: string | undefined,
     name: string,
     login: string,
     password: string
-  ) => void;
-  onClickRemove: (e: any, id: any) => void;
-  onClickCopy: (e: any, password: string, id: any) => void;
-  copied: boolean;
+  ) => Promise<void> | void;
+  onClickRemove: (id: string | undefined) => void;
+  onClickCopy: (password: string, id: string | undefined) => void;
+  copied: number | string;
 }
 
 const Card = ({
@@ -47,7 +46,7 @@ const Card = ({
       <span
         className={nameLoginContainer}
         id={id}
-        onClick={(e: any) => onClickCopy(e, password, id)}
+        onClick={() => onClickCopy(password, id)}
       >
         <span className={nameStyle}>{name} </span>
         <span className={loginStyle}>{login}</span>
@@ -57,14 +56,14 @@ const Card = ({
         <div
           className={buttonStyle}
           id={edit}
-          onClick={(e: any) => onClickUpdate(e, id, name, login, password)}
+          onClick={() => onClickUpdate(id, name, login, password)}
         >
           <MdEdit size={25} />
         </div>
         <div
           className={buttonStyle}
           id={deleteStyle}
-          onClick={(e: any) => onClickRemove(e, id)}
+          onClick={() => onClickRemove(id)}
         >
           <MdDelete size={25} />
         </div>
