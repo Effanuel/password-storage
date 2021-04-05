@@ -32,6 +32,8 @@ The Backend was built using **Node + Express** and the Frontend, **React + Redux
 - [React Bootstrap](https://react-bootstrap.github.io/)
 - [Mongoose](https://github.com/Automattic/mongoose)
 
+*Note: since this repo has been last worked on a while ago, its a good example of how not to write redux code.*
+
 <!-- GETTING STARTED -->
 
 ## Getting Started
