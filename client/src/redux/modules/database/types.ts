@@ -1,13 +1,14 @@
 //database
-export const DATA_LOADING = "DATA_LOADING";
-export const FETCH_DATA_SUCCESS = "FETCH_DATA_SUCCESS";
-export const FETCH_DATA_ERROR = "FETCH_DATA_ERROR";
-export const ADD_DATA_SUCCESS = "ADD_DATA_SUCCESS";
-export const SELECT_NAME = "SELECT_NAME";
+export const DATA_LOADING = 'DATA_LOADING';
+export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
+export const FETCH_DATA_ERROR = 'FETCH_DATA_ERROR';
+export const ADD_DATA_SUCCESS = 'ADD_DATA_SUCCESS';
+export const SELECT_NAME = 'SELECT_NAME';
 
 interface DataLoading {
   type: typeof DATA_LOADING;
 }
+
 interface FetchDataSuccess {
   type: typeof FETCH_DATA_SUCCESS;
   payload: any;
@@ -28,12 +29,7 @@ interface SelectName {
   payload: object;
 }
 
-export type DatabaseActions =
-  | DataLoading
-  | FetchDataSuccess
-  | FetchDataError
-  | AddDataSuccess
-  | SelectName;
+export type DatabaseActions = DataLoading | FetchDataSuccess | FetchDataError | AddDataSuccess | SelectName;
 
 export interface DatabaseState {
   data: any;

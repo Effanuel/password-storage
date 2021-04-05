@@ -7,19 +7,19 @@ const DataSchema = new Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     login: {
       type: String,
       required: true,
-      lowercase: true
+      lowercase: true,
     },
     password: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
-  { timestamps: true }
+  {timestamps: true}
 );
 
 // DataSchema.methods.generateAuthToken = async function() {
@@ -43,4 +43,4 @@ const DataSchema = new Schema(
 // export the new Schema so we could modify it using Node.js
 const Data = mongoose.model("Data", DataSchema);
 
-export { Data };
+export {Data};

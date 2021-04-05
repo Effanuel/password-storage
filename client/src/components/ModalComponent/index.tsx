@@ -1,14 +1,10 @@
-import React from "react";
-
-import { Modal, Form, ProgressBar } from "react-bootstrap";
-
-import { Input, ButtonComponent } from "../";
-
-import { GiCycle } from "react-icons/gi";
-import { IoIosEye } from "react-icons/io";
-import "./styles.css";
-
-import { styleProgress } from "../../utils/functions";
+import React from 'react';
+import {Modal, Form, ProgressBar} from 'react-bootstrap';
+import {Input, ButtonComponent} from '../';
+import {GiCycle} from 'react-icons/gi';
+import {IoIosEye} from 'react-icons/io';
+import {styleProgress} from '../../utils/functions';
+import './styles.css';
 
 interface Props {
   title: string;
@@ -27,7 +23,7 @@ interface Props {
   progress: number;
 }
 
-const ModalComponent = ({
+export function ModalComponent({
   title,
   show,
   onSave,
@@ -41,8 +37,8 @@ const ModalComponent = ({
   onGeneratePassword,
   loadingComponent,
   disabled,
-  progress
-}: Props) => {
+  progress,
+}: Props) {
   const [showPassword, setShowPassword] = React.useState(false);
 
   return (
@@ -54,29 +50,16 @@ const ModalComponent = ({
         <Modal.Body className="modal-body-style">
           <Form>
             <Form.Group>
-              <Input
-                label="Name"
-                id="name"
-                placeholder={p_name}
-                onChange={onInputChange}
-              />
+              <Input label="Name" id="name" placeholder={p_name} onChange={onInputChange} />
             </Form.Group>
             <Form.Group>
-              <Input
-                label="Login"
-                id="login"
-                placeholder={p_login}
-                onChange={onInputChange}
-              />
+              <Input label="Login" id="login" placeholder={p_login} onChange={onInputChange} />
             </Form.Group>
             <Form.Group>
               <div className="pass-container">
                 <Form.Label>Password</Form.Label>
                 <div>
-                  <span
-                    className="generate"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
+                  <span className="generate" onClick={() => setShowPassword(!showPassword)}>
                     <IoIosEye />
                   </span>
                   <label className="generate-style">Generate</label>
@@ -90,33 +73,17 @@ const ModalComponent = ({
                 id="password"
                 placeholder={p_password}
                 onChange={onPasswordChange}
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
               />
-              <ProgressBar
-                variant={styleProgress(progress)}
-                now={progress}
-                className="progressBarStyle"
-              />
+              <ProgressBar variant={styleProgress(progress)} now={progress} className="progressBarStyle" />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer className="modal-footer-style">
           <ButtonComponent type="close" label="Close" onClick={onClose} />
-          <ButtonComponent
-            label={loadingComponent || "Save Changes"}
-            onClick={onSave}
-            disabled={disabled}
-          />
-          {/* <Button variant="secondary" onClick={onClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={onSave} disabled={disabled}>
-            {loadingComponent || "Save Changes"}
-          </Button> */}
+          <ButtonComponent label={loadingComponent || 'Save Changes'} onClick={onSave} disabled={disabled} />
         </Modal.Footer>
       </Modal>
     </div>
   );
-};
-
-export { ModalComponent };
+}

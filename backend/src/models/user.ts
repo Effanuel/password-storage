@@ -6,20 +6,20 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   username: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   tokens: [
     {
       token: {
         type: String,
-        required: true
-      }
-    }
-  ]
+        required: true,
+      },
+    },
+  ],
 });
 
 interface IUser extends mongoose.Document {
@@ -28,18 +28,18 @@ interface IUser extends mongoose.Document {
   tokens: [];
 }
 
-UserSchema.methods.generateAuthToken = async function() {
+UserSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, "test");
+  const token = jwt.sign({_id: user._id.toString()}, "test");
 
-  user.tokens = user.tokens.concat({ token });
+  user.tokens = user.tokens.concat({token});
   await user.save();
 
   return token;
 };
 
 UserSchema.statics.findByCredentials = async (username: any, password: any) => {
-  const user = await User.findOne({ username });
+  const user = await User.findOne({username});
 
   if (!user) {
     console.log("Unable");
@@ -60,7 +60,7 @@ UserSchema.statics.findByCredentials = async (username: any, password: any) => {
 };
 
 // Hash the plain text password before saving
-UserSchema.pre("save", async function(next) {
+UserSchema.pre("save", async function (next) {
   const user: any = this;
   console.log(user);
 
@@ -77,4 +77,4 @@ UserSchema.pre("save", async function(next) {
 // export the new Schema so we could modify it using Node.js
 const User: any = mongoose.model<any>("User", UserSchema);
 
-export { User };
+export {User};

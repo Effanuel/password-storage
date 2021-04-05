@@ -5,9 +5,9 @@ import helmet from "helmet";
 import path from "path";
 import mongoose from "mongoose";
 
-import { userRoute, dataRoute } from "./routes";
+import {userRoute, dataRoute} from "./routes";
 import morgan from "morgan";
-import { logger } from "./util/logger";
+import {logger} from "./util/logger";
 
 const port = process.env.PORT || 3001;
 const app: express.Application = express();
@@ -17,7 +17,7 @@ app.use(helmet());
 app.use(cors());
 app.disable("etag").disable("x-powered-by");
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use("/api", dataRoute);
 app.use("/user", userRoute);
@@ -29,7 +29,7 @@ if (process.env.NODE_ENV != "development ") {
   app.use(express.static(path.join(__dirname, "../../client/build")));
 
   // Handle React routing, return all requests to React app
-  app.get("/*", function(req: express.Request, res: express.Response) {
+  app.get("/*", function (req: express.Request, res: express.Response) {
     res.sendFile(path.join(__dirname, "../../", "client/build/index.html"));
   });
 }
@@ -44,7 +44,7 @@ mongoose.connect(
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: false
+    useFindAndModify: false,
   }
   // () => {
   //   mongoose.connection.db.dropDatabase();
@@ -62,29 +62,29 @@ const morganFormat = process.env.NODE_ENV !== "production" ? "dev" : "combined";
 
 app.use(
   morgan(morganFormat, {
-    skip: function(req, res) {
+    skip: function (req, res) {
       return res.statusCode < 400;
     },
-    stream: process.stderr
+    stream: process.stderr,
   })
 );
 
 app.use(
   morgan(morganFormat, {
-    skip: function(req, res) {
+    skip: function (req, res) {
       return res.statusCode >= 400;
     },
-    stream: process.stdout
+    stream: process.stdout,
   })
 );
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   logger.debug("Debug statement");
   logger.info("Info statement");
   res.send(req.method + " " + req.originalUrl);
 });
 
-app.get("/error", function(req, res) {
+app.get("/error", function (req, res) {
   throw new Error("Problem Here!");
 });
 
@@ -96,14 +96,14 @@ app.use((err: any, req: any, res: any, next: any) => {
     return;
   }
 
-  logger.error(err.message, { url: req.originalUrl });
+  logger.error(err.message, {url: req.originalUrl});
 
   res.status(500);
-  res.json({ error: err.message });
+  res.json({error: err.message});
 });
 
 // Start server
-app.listen(port, function() {
+app.listen(port, function () {
   logger.info("Example app listening on port " + port);
 });
 // ============LOGGING============

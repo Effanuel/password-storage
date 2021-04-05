@@ -1,7 +1,7 @@
-import axios from "axios";
-import { encrypt } from "../../../utils/algo";
-import { Thunk } from "../../models/state";
-import { modalClose } from "../modal";
+import axios from 'axios';
+import {encrypt} from '../../../utils/algo';
+import {Thunk} from '../../models/state';
+import {modalClose} from '../modal';
 import {
   FETCH_DATA_ERROR,
   DATA_LOADING,
@@ -9,96 +9,65 @@ import {
   SELECT_NAME,
   ADD_DATA_SUCCESS,
   DatabaseActions,
-  DatabaseState
-} from "./types";
+  DatabaseState,
+} from './types';
 
 const initialState = {
   data: [],
   loading: false,
-  error: "",
-  selectedName: {
-    _id: "",
-    name: "",
-    login: "",
-    password: ""
-  }
+  error: '',
+  selectedName: {_id: '', name: '', login: '', password: ''},
 };
 
-export const DatabaseReducer = (
-  state: DatabaseState = initialState,
-  action: DatabaseActions
-): DatabaseState => {
+export const DatabaseReducer = (state: DatabaseState = initialState, action: DatabaseActions): DatabaseState => {
   switch (action.type) {
     case FETCH_DATA_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        data: action.payload,
-        error: ""
-      };
+      return {...state, loading: false, data: action.payload, error: ''};
     case DATA_LOADING:
-      return { ...state, loading: true, error: "" };
+      return {...state, loading: true, error: ''};
     case FETCH_DATA_ERROR:
-      return { ...state, loading: false, error: action.payload };
+      return {...state, loading: false, error: action.payload};
     case SELECT_NAME:
-      return {
-        ...state,
-        loading: false,
-        error: "",
-        selectedName: action.payload
-      };
-    // case ADD_DATA_ERROR:
-    //   return { ...state, loading: false, error: action.payload };
+      return {...state, loading: false, error: '', selectedName: action.payload};
     default:
       return state;
   }
 };
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 const encryptData = async (payload: string): Promise<string> => {
   try {
-    const master_key = "hello";
+    const master_key = 'hello';
     const encrypted = await encrypt(master_key, payload);
     return encrypted;
   } catch (err) {
-    throw "Encryption failed.";
+    throw 'Encryption failed.';
   }
 };
 
-export const fetchData = (): Thunk => async dispatch => {
+export const fetchData = (): Thunk => async (dispatch) => {
   try {
     dispatch(dataLoading());
-    const response = await axios.get("/api/getData");
-    const { data } = response;
+    const response = await axios.get('/api/getData');
+    const {data} = response;
     dispatch(fetchDataSuccess(data));
   } catch (err) {
     dispatch(fetchDataError(err));
   }
 };
 
-export const addData = (payload: any): Thunk => async dispatch => {
+export const addData = (payload: any): Thunk => async (dispatch) => {
   try {
     dispatch(dataLoading());
-    const { name, login, password } = payload;
+    const {name, login, password} = payload;
     // Encrypt password
     const encrypted_password = await encryptData(password);
 
-    const response = await axios.post("/api/putData", {
+    const response = await axios.post('/api/putData', {
       name,
       login,
-      password: encrypted_password
+      password: encrypted_password,
     });
-    console.log("ADDDATARESPONSE", response);
-    // dispatch(addDataSuccess(data));
+    console.log('ADDDATARESPONSE', response);
     dispatch(modalClose());
     dispatch(fetchData());
   } catch (err) {
@@ -106,15 +75,10 @@ export const addData = (payload: any): Thunk => async dispatch => {
   }
 };
 
-export const removeData = (payload: any): Thunk => async dispatch => {
+export const removeData = (payload: any): Thunk => async (dispatch) => {
   try {
     dispatch(dataLoading());
-    const response = await axios.delete("/api/deleteData", {
-      data: {
-        _id: payload
-      }
-    });
-    console.log(response);
+    await axios.delete('/api/deleteData', {data: {_id: payload}});
     dispatch(removeDataSuccess());
     dispatch(fetchData());
   } catch (err) {
@@ -122,23 +86,14 @@ export const removeData = (payload: any): Thunk => async dispatch => {
   }
 };
 
-export const updateData = ({
-  _id,
-  name,
-  login,
-  password
-}: any): Thunk => async dispatch => {
+export const updateData = ({_id, name, login, password}: any): Thunk => async (dispatch) => {
   try {
     dispatch(dataLoading());
-    console.log(_id, name, login, password, "STATS");
+    console.log(_id, name, login, password, 'STATS');
     const encrypted_password = await encryptData(password);
-    const response = await axios.post("/api/updateData", {
-      data: {
-        filter: { _id: _id },
-        update: { name, login, password: encrypted_password }
-      }
+    await axios.post('/api/updateData', {
+      data: {filter: {_id: _id}, update: {name, login, password: encrypted_password}},
     });
-    console.log(response);
     dispatch(modalClose());
     dispatch(fetchData());
   } catch (err) {
@@ -148,28 +103,23 @@ export const updateData = ({
 
 export const selectName = (payload: any): DatabaseActions => ({
   type: SELECT_NAME,
-  payload: payload
+  payload: payload,
 });
 
 const dataLoading = (): DatabaseActions => ({
-  type: DATA_LOADING
+  type: DATA_LOADING,
 });
 const fetchDataSuccess = (payload: any): DatabaseActions => ({
   type: FETCH_DATA_SUCCESS,
-  payload: payload.data
+  payload: payload.data,
 });
-
-// const addDataSuccess = (payload: any): any => ({
-//   type: ADD_DATA_SUCCESS,
-//   payload: payload.success
-// });
 
 const removeDataSuccess = (payload?: any): DatabaseActions => ({
   type: ADD_DATA_SUCCESS,
-  payload: payload
+  payload: payload,
 });
 
 const fetchDataError = (payload: any): DatabaseActions => ({
   type: FETCH_DATA_ERROR,
-  payload: payload.error
+  payload: payload.error,
 });

@@ -12,7 +12,7 @@ const auth = async (req, res, next) => {
     const decoded = jwt.verify(token, "test");
     const user = await User.findOne({
       _id: decoded._id,
-      "tokens.token": token
+      "tokens.token": token,
     });
     console.log(token, req.user);
 
@@ -23,8 +23,8 @@ const auth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res.status(401).send({ error: "Authenticate" });
+    res.status(401).send({error: "Authenticate"});
   }
 };
 
-export { auth };
+export {auth};

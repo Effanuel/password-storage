@@ -1,11 +1,11 @@
-import { createLogger, format, transports } from "winston";
+import {createLogger, format, transports} from "winston";
 
 // https://github.com/winstonjs/winston#logging
 // { error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
 const level = process.env.LOG_LEVEL || "debug";
 
 function formatParams(info: any) {
-  const { timestamp, level, message, ...args } = info;
+  const {timestamp, level, message, ...args} = info;
   const ts = timestamp.slice(0, 19).replace("T", " ");
 
   return `${ts} ${level}:${message} ${
@@ -33,17 +33,17 @@ if (process.env.NODE_ENV !== "production") {
   logger = createLogger({
     level: level,
     format: developmentFormat,
-    transports: [new transports.Console()]
+    transports: [new transports.Console()],
   });
 } else {
   logger = createLogger({
     level: level,
     format: productionFormat,
     transports: [
-      new transports.File({ filename: "error.log", level: "error" }),
-      new transports.File({ filename: "combined.log" })
-    ]
+      new transports.File({filename: "error.log", level: "error"}),
+      new transports.File({filename: "combined.log"}),
+    ],
   });
 }
 
-export { logger };
+export {logger};

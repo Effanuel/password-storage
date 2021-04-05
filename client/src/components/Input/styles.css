@@ -1,4 +1,4 @@
-@import "../../css/root.css";
+@import '../../css/root.css';
 
 .input {
   background-color: var(--secondaryColor);

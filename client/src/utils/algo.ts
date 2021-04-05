@@ -13,7 +13,7 @@ const str2buf = (str: string): Uint8Array => {
  * @returns {String}
  */
 function buf2str(buffer: any): string {
-  return new TextDecoder("utf-8").decode(buffer);
+  return new TextDecoder('utf-8').decode(buffer);
 }
 
 /**
@@ -33,9 +33,9 @@ function hex2buf(hexStr: any): Uint8Array {
 function buf2hex(buffer: ArrayBuffer): string {
   return Array.prototype.slice
     .call(new Uint8Array(buffer))
-    .map(x => [x >> 4, x & 15])
-    .map(ab => ab.map(x => x.toString(16)).join(""))
-    .join("");
+    .map((x) => [x >> 4, x & 15])
+    .map((ab) => ab.map((x) => x.toString(16)).join(''))
+    .join('');
 }
 
 /**
@@ -47,24 +47,15 @@ function buf2hex(buffer: ArrayBuffer): string {
  * @param {UInt8Array} salt [salt=random bytes]
  * @returns {Promise<[CryptoKey,UInt8Array]>}
  */
-const deriveKey = async (
-  passphrase: string,
-  salt1?: Uint8Array
-): Promise<[CryptoKey, any]> => {
+const deriveKey = async (passphrase: string, salt1?: Uint8Array): Promise<[CryptoKey, any]> => {
   const salt = salt1 || crypto.getRandomValues(new Uint8Array(8));
-  const key = await crypto.subtle.importKey(
-    "raw",
-    str2buf(passphrase),
-    "PBKDF2",
-    false,
-    ["deriveKey"]
-  );
+  const key = await crypto.subtle.importKey('raw', str2buf(passphrase), 'PBKDF2', false, ['deriveKey']);
   const key_1 = await crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt, iterations: 1000, hash: "SHA-256" },
+    {name: 'PBKDF2', salt, iterations: 1000, hash: 'SHA-256'},
     key,
-    { name: "AES-GCM", length: 256 },
+    {name: 'AES-GCM', length: 256},
     false,
-    ["encrypt", "decrypt"]
+    ['encrypt', 'decrypt'],
   );
   return [key_1, salt];
 };
@@ -78,18 +69,11 @@ const deriveKey = async (
  * @param {String} plaintext
  * @returns {Promise<String>}
  */
-export const encrypt = async (
-  passphrase: string,
-  plaintext: string
-): Promise<string> => {
+export const encrypt = async (passphrase: string, plaintext: string): Promise<string> => {
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const data = str2buf(plaintext);
   const [key, salt] = await deriveKey(passphrase);
-  const ciphertext = await crypto.subtle.encrypt(
-    { name: "AES-GCM", iv },
-    key,
-    data
-  );
+  const ciphertext = await crypto.subtle.encrypt({name: 'AES-GCM', iv}, key, data);
   return `${buf2hex(salt)}-${buf2hex(iv)}-${buf2hex(ciphertext)}`;
 };
 
@@ -100,13 +84,10 @@ export const encrypt = async (
  * @param {String} saltIvCipherHex
  * @returns {Promise<String>}
  */
-export const decrypt = async (
-  passphrase: string,
-  saltIvCipherHex: string
-): Promise<string> => {
-  const [salt, iv, data] = saltIvCipherHex.split("-").map(hex2buf);
+export const decrypt = async (passphrase: string, saltIvCipherHex: string): Promise<string> => {
+  const [salt, iv, data] = saltIvCipherHex.split('-').map(hex2buf);
   const [key] = await deriveKey(passphrase, salt);
-  const v = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, data);
+  const v = await crypto.subtle.decrypt({name: 'AES-GCM', iv}, key, data);
   return buf2str(new Uint8Array(v));
 };
 

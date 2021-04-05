@@ -1,6 +1,6 @@
-import React from "react";
-import "./App.css";
-import { SearchContainer } from "./containers";
+import React from 'react';
+import './App.css';
+import {SearchContainer} from './containers';
 
 export default function App() {
   return (

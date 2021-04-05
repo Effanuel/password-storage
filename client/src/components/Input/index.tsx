@@ -1,28 +1,19 @@
-import React from "react";
+import React from 'react';
+import {FormGroup, Form} from 'react-bootstrap';
+import './styles.css';
 
-import { FormGroup, Form } from "react-bootstrap";
-
-import "./styles.css";
-
-type Props = {
+interface Props {
   id?: string;
   type?: any;
   label?: string;
   placeholder: string;
   value?: string;
   onChange: (event: any) => void;
-};
+}
 
-const Input = ({
-  id,
-  type = "text",
-  label,
-  placeholder,
-  value,
-  onChange
-}: Props) => {
+export function Input({id, type = 'text', label, placeholder, value, onChange}: Props) {
   return (
-    <FormGroup style={{ paddingBottom: "0px", marginBottom: "0px" }}>
+    <FormGroup style={{paddingBottom: '0px', marginBottom: '0px'}}>
       {label && <Form.Label>{label}</Form.Label>}
       <Form.Control
         id={id}
@@ -35,6 +26,4 @@ const Input = ({
       />
     </FormGroup>
   );
-};
-
-export { Input };
+}

@@ -12,10 +12,6 @@
   },
   "rulesDirectory": [],
   "linterOptions": {
-    "exclude": [
-      "config/**/*.js",
-      "node_modules/**/*.ts",
-      "src/__tests__/**.test.tsx"
-    ]
+    "exclude": ["config/**/*.js", "node_modules/**/*.ts", "src/__tests__/**.test.tsx"]
   }
 }

@@ -1,14 +1,12 @@
-export const styleProgress = (
-  str: number
-): "danger" | "warning" | "info" | "success" => {
+export const styleProgress = (str: number): 'danger' | 'warning' | 'info' | 'success' => {
   if (str < 30) {
-    return "danger";
+    return 'danger';
   } else if (str < 60) {
-    return "warning";
+    return 'warning';
   } else if (str < 85) {
-    return "info";
+    return 'info';
   } else {
-    return "success";
+    return 'success';
   }
 };
 
@@ -26,14 +24,14 @@ export const scorePassword = (pass: string): number => {
     digits: /\d/.test(pass),
     lower: /[a-z]/.test(pass),
     upper: /[A-Z]/.test(pass),
-    nonWords: /\W/.test(pass)
+    nonWords: /\W/.test(pass),
   };
   // Variation weights
   const weights: any = {
     digits: 0.7,
     lower: 0.5,
     upper: 0.75,
-    nonWords: 1
+    nonWords: 1,
   };
   // Applying variation points
   let variationCount: number = 0;
@@ -48,9 +46,8 @@ export const scorePassword = (pass: string): number => {
 };
 
 export const generatePassword = (length: number): string => {
-  const charset =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+=;,./";
-  let retVal: string = "";
+  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+=;,./';
+  let retVal: string = '';
   for (var i = 0, n = charset.length; i < length; ++i) {
     retVal += charset.charAt(Math.floor(Math.random() * n));
   }

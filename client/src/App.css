@@ -1,4 +1,4 @@
-@import "./css/root.css";
+@import './css/root.css';
 
 body {
   background-color: var(--secondaryColor);

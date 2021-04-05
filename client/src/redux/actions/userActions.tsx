@@ -1,8 +1,7 @@
-import * as constants from "./actionTypes";
+import * as constants from './actionTypes';
+import {Thunk} from '../models/state';
 
-import { Thunk } from "../models/state";
-
-export const login = (payload: any): Thunk => async dispatch => {
+export const login = (payload: any): Thunk => async (dispatch) => {
   try {
     dispatch(loading());
 
@@ -11,7 +10,7 @@ export const login = (payload: any): Thunk => async dispatch => {
     dispatch(loginError());
   }
 };
-export const signup = (payload: any): Thunk => async dispatch => {
+export const signup = (payload: any): Thunk => async (dispatch) => {
   try {
     dispatch(loading());
 
@@ -22,21 +21,21 @@ export const signup = (payload: any): Thunk => async dispatch => {
 };
 
 const loading = (payload?: any): any => ({
-  type: constants.LOADING
+  type: constants.LOADING,
 });
 
 const loginSuccess = (payload?: any): any => ({
-  type: constants.LOGIN_SUCCESS
+  type: constants.LOGIN_SUCCESS,
 });
 
 const loginError = (payload?: any): any => ({
-  type: constants.LOGIN_ERROR
+  type: constants.LOGIN_ERROR,
 });
 
 const signupSuccess = (payload?: any): any => ({
-  type: constants.SIGNUP_SUCCESS
+  type: constants.SIGNUP_SUCCESS,
 });
 
 const signupError = (payload?: any): any => ({
-  type: constants.SIGNUP_ERROR
+  type: constants.SIGNUP_ERROR,
 });

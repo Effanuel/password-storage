@@ -1,9 +1,9 @@
-import * as constants from "./actionTypes";
-import axios from "axios";
-import { encrypt } from "../../utils/algo";
+import * as constants from './actionTypes';
+import axios from 'axios';
+import {encrypt} from '../../utils/algo';
 
-import { Thunk } from "../models/state";
-import { modalClose } from "./modalActions";
+import {Thunk} from '../models/state';
+import {modalClose} from './modalActions';
 
 interface DataLoading {
   type: constants.DATA_LOADING;
@@ -28,47 +28,42 @@ interface SelectName {
   payload: object;
 }
 
-export type Actions =
-  | DataLoading
-  | FetchDataSuccess
-  | FetchDataError
-  | AddDataSuccess
-  | SelectName;
+export type Actions = DataLoading | FetchDataSuccess | FetchDataError | AddDataSuccess | SelectName;
 
 const encryptData = async (payload: string): Promise<string> => {
   try {
-    const master_key = "hello";
+    const master_key = 'hello';
     const encrypted = await encrypt(master_key, payload);
     return encrypted;
   } catch (err) {
-    throw "Encryption failed.";
+    throw 'Encryption failed.';
   }
 };
 
-export const fetchData = (payload?: any): Thunk => async dispatch => {
+export const fetchData = (payload?: any): Thunk => async (dispatch) => {
   try {
     dispatch(dataLoading());
-    const response = await axios.get("/api/getData");
-    const { data } = response;
+    const response = await axios.get('/api/getData');
+    const {data} = response;
     dispatch(fetchDataSuccess(data));
   } catch (err) {
     dispatch(fetchDataError(err));
   }
 };
 
-export const addData = (payload: any): Thunk => async dispatch => {
+export const addData = (payload: any): Thunk => async (dispatch) => {
   try {
     dispatch(dataLoading());
-    const { name, login, password } = payload;
+    const {name, login, password} = payload;
     // Encrypt password
     const encrypted_password = await encryptData(password);
 
-    const response = await axios.post("/api/putData", {
+    const response = await axios.post('/api/putData', {
       name,
       login,
-      password: encrypted_password
+      password: encrypted_password,
     });
-    console.log("ADDDATARESPONSE", response);
+    console.log('ADDDATARESPONSE', response);
     // dispatch(addDataSuccess(data));
     dispatch(modalClose());
     dispatch(fetchData());
@@ -77,13 +72,13 @@ export const addData = (payload: any): Thunk => async dispatch => {
   }
 };
 
-export const removeData = (payload: any): Thunk => async dispatch => {
+export const removeData = (payload: any): Thunk => async (dispatch) => {
   try {
     dispatch(dataLoading());
-    const response = await axios.delete("/api/deleteData", {
+    const response = await axios.delete('/api/deleteData', {
       data: {
-        _id: payload
-      }
+        _id: payload,
+      },
     });
     console.log(response);
     dispatch(removeDataSuccess());
@@ -93,21 +88,16 @@ export const removeData = (payload: any): Thunk => async dispatch => {
   }
 };
 
-export const updateData = ({
-  _id,
-  name,
-  login,
-  password
-}: any): Thunk => async dispatch => {
+export const updateData = ({_id, name, login, password}: any): Thunk => async (dispatch) => {
   try {
     dispatch(dataLoading());
-    console.log(_id, name, login, password, "STATS");
+    console.log(_id, name, login, password, 'STATS');
     const encrypted_password = await encryptData(password);
-    const response = await axios.post("/api/updateData", {
+    const response = await axios.post('/api/updateData', {
       data: {
-        filter: { _id: _id },
-        update: { name, login, password: encrypted_password }
-      }
+        filter: {_id: _id},
+        update: {name, login, password: encrypted_password},
+      },
     });
     console.log(response);
     dispatch(modalClose());
@@ -119,15 +109,15 @@ export const updateData = ({
 
 export const selectName = (payload: any): any => ({
   type: constants.SELECT_NAME,
-  payload: payload
+  payload: payload,
 });
 
 const dataLoading = (payload?: any): any => ({
-  type: constants.DATA_LOADING
+  type: constants.DATA_LOADING,
 });
 const fetchDataSuccess = (payload: any): any => ({
   type: constants.FETCH_DATA_SUCCESS,
-  payload: payload.data
+  payload: payload.data,
 });
 
 // const addDataSuccess = (payload: any): any => ({
@@ -137,10 +127,10 @@ const fetchDataSuccess = (payload: any): any => ({
 
 const removeDataSuccess = (payload?: any): any => ({
   type: constants.ADD_DATA_SUCCESS,
-  payload: payload
+  payload: payload,
 });
 
 const fetchDataError = (payload: any): any => ({
   type: constants.FETCH_DATA_ERROR,
-  payload: payload.error
+  payload: payload.error,
 });

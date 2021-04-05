@@ -1,29 +1,18 @@
-import React from "react";
+import React from 'react';
+import './styles.css';
 
-import "./styles.css";
-
-type Props = {
+interface Props {
   label: string;
   disabled?: boolean;
   onClick: () => void;
   type?: string;
-};
+}
 
-const ButtonComponent = ({
-  label,
-  disabled,
-  onClick,
-  type = "text"
-}: Props) => {
+export function ButtonComponent({label, disabled, onClick, type = 'text'}: Props) {
+  const styleType = type === 'close' ? 'btn-cl' : 'btn-su';
   return (
-    <button
-      className={type === "close" ? "btn-style btn-cl" : "btn-style btn-su"}
-      onClick={onClick}
-      disabled={disabled}
-    >
+    <button className={`btn-style ${styleType}`} onClick={onClick} disabled={disabled}>
       {label}
     </button>
   );
-};
-
-export { ButtonComponent };
+}

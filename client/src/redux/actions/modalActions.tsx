@@ -1,4 +1,4 @@
-import * as constants from "./actionTypes";
+import * as constants from './actionTypes';
 
 interface ModalOpen {
   type: constants.MODAL_OPEN;
@@ -13,9 +13,9 @@ export type Actions = ModalOpen | ModalClose;
 
 export const modalOpen = (payload: any): any => ({
   type: constants.MODAL_OPEN,
-  payload: payload
+  payload: payload,
 });
 
 export const modalClose = (): any => ({
-  type: constants.MODAL_CLOSE
+  type: constants.MODAL_CLOSE,
 });
